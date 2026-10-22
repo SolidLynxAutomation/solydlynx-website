@@ -140,7 +140,9 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .wrap { padding: 0 16px; }
   nav { top: 10px; padding: 0 12px; }
   nav .wrap, nav.compact .wrap { height: 54px; padding: 0 10px 0 16px; }
+  .logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
   .logo img { height: 32px; }
+  nav .wrap { justify-content: flex-end; }
   .nav-toggle {
     display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer;
     color: var(--text); background: rgba(255,255,255,.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
