@@ -1,0 +1,122 @@
+---
+import Layout from "../layouts/Layout.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const email = "geral@solidlynx.pt";
+const pains = [
+  { t: "Dados repetidos", d: "A mesma encomenda escrita em vários sítios." },
+  { t: "Peças erradas", d: "Erros que só aparecem depois do corte." },
+  { t: "Variantes à mão", d: "Cada alteração obriga a redesenhar." },
+  { t: "Dependência de pessoas", d: "O processo vive na cabeça de alguém." },
+];
+const solutions = [
+  { t: "Encomenda → peças", d: "Lista de peças gerada automaticamente." },
+  { t: "Desenho paramétrico", d: "Variantes a partir de parâmetros." },
+  { t: "CNC e corte", d: "Programas de máquina e plano de corte." },
+  { t: "Etiquetas", d: "Código de barras e fichas de produção." },
+  { t: "ERP e folhas de cálculo", d: "Sem copiar e colar." },
+  { t: "Orçamentação", d: "Preço calculado pelo consumo real." },
+];
+const flow = ["Encomenda", "Lista de peças", "Desenho / CAM", "Corte e CNC", "Etiquetas", "Montagem"];
+const faq = [
+  { t: "Que software CAD/CAM?", d: "O que já usas." },
+  { t: "Tenho de mudar o processo?", d: "Não. Adaptamo-nos a ti." },
+  { t: "Posso começar só com uma parte?", d: "Sim, é o recomendado." },
+  { t: "E se a produção mudar?", d: "As regras são documentadas e alteráveis." },
+];
+---
+<Layout title="SolidLynx · Mobiliário" description="Automação para fábricas e marcenarias: da encomenda ao CNC.">
+  <nav>
+    <div class="wrap">
+      <a class="logo" href={`${base}/`}><img src={`${base}/logo.png`} alt="SolidLynx" height="40" />
+      </a>
+      <ul>
+        <li><a href={`${base}/`}>Início</a></li>
+        <li><a href="#problemas">Problemas</a></li>
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div class="wrap">
+        <span class="pill">Para fábricas e marcenarias</span>
+        <h1>Da encomenda à máquina, <span class="grad">sem retrabalho</span></h1>
+        <p class="lead">Listas de corte, desenho, CNC e etiquetas. Automáticos.</p>
+        <div class="cta">
+          <a class="btn primary" href="#contacto">Pedir análise</a>
+          <a class="btn ghost" href="#solucoes">Ver soluções</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="fluxo">
+      <div class="wrap">
+        <p class="eyebrow">O fluxo</p>
+        <h2>Um processo, <span class="grad">sem cópias</span></h2>
+        <ol class="flow">
+          {flow.map(f => <li>{f}</li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section id="problemas">
+      <div class="wrap">
+        <p class="eyebrow">Problemas</p>
+        <h2>O que custa <span class="grad">dinheiro</span></h2>
+        <div class="grid">
+          {pains.map(s => <article class="card"><h3>{s.t}</h3><p>{s.d}</p></article>)}
+        </div>
+      </div>
+    </section>
+
+    <section id="solucoes">
+      <div class="wrap">
+        <p class="eyebrow">Soluções</p>
+        <h2>O que <span class="grad">construímos</span></h2>
+        <div class="grid">
+          {solutions.map(s => <article class="card glow"><h3>{s.t}</h3><p>{s.d}</p></article>)}
+        </div>
+      </div>
+    </section>
+
+    <section id="preco">
+      <div class="wrap">
+        <p class="eyebrow">Como começar</p>
+        <h2>Começa pelo que mais <span class="grad">pesa</span></h2>
+        <div class="grid steps">
+          <article class="card"><h3>Análise do processo</h3><p>Onde se perde mais tempo.</p></article>
+          <article class="card"><h3>Primeira automação</h3><p>Uma funcionalidade, preço fechado.</p></article>
+          <article class="card"><h3>Crescer por módulos</h3><p>Juntas só o que precisares.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <p class="eyebrow">Perguntas</p>
+        <h2><span class="grad">Perguntas</span> frequentes</h2>
+        <div class="grid">
+          {faq.map(s => <article class="card"><h3>{s.t}</h3><p>{s.d}</p></article>)}
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="contact">
+      <div class="wrap">
+        <div class="box">
+          <h2>Foca-te no que <span class="grad">interessa</span></h2>
+          <a class="btn primary" href={`mailto:${email}`}>{email}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© {new Date().getFullYear()} SolidLynx</span>
+      <a href={`${base}/`}>Voltar ao início</a>
+    </div>
+  </footer>
+</Layout>
