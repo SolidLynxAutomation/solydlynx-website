@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<Layout title="Termos de Utilização · SolidLynx" description="Termos de utilização do SolidLynx.">
+  <nav>
+    <div class="wrap">
+      <a class="logo" href={`${base}/`}><img src={`${base}/logo.png`} alt="SolidLynx" height="40" /></a>
+      <ul>
+        <li><a href={`${base}/#servicos`}>Serviços</a></li>
+        <li><a href={`${base}/#como`}>Como funciona</a></li>
+        <li><a href={`${base}/#preco`}>Preço</a></li>
+        <li><a href={`${base}/#contacto`}>Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="doc">
+    <div class="wrap">
+      <h1>TERMOS DE UTILIZAÇÃO — SolidLynx</h1>
+      <p class="doc-sub">(versão 1.0)  ·  RASCUNHO — a rever juridicamente</p>
+      <h2>1. Objeto</h2>
+      <p>Estes termos regem a utilização do programa SolidLynx, fornecido por SolidLynx (NIF [NIF], [morada]).</p>
+      <h2>2. Licença</h2>
+      <p>A licença é concedida por subscrição e <strong>por máquina</strong> (vincula-se ao 1.º computador onde é ativada). É pessoal e intransmissível. Não confere a propriedade do software.</p>
+      <h2>3. Restrições</h2>
+      <p>É proibido, sem autorização escrita do fornecedor: descompilar, fazer engenharia inversa, desofuscar, remover ou contornar a verificação de licença, falsificar o servidor de licenças, extrair ou reutilizar o conteúdo interno (incluindo o código de automação), ou modificar e redistribuir o software.</p>
+      <h2>4. Propriedade intelectual</h2>
+      <p>Todo o software, incluindo a sua lógica de automação e proteção, é propriedade de SolidLynx.</p>
+      <h2>5. Dados e monitorização</h2>
+      <p>A utilização é licenciada por máquina e monitorizada para validação da licença e prevenção de uso indevido, nos termos da Política de Privacidade.</p>
+      <h2>6. Limitação de responsabilidade</h2>
+      <p>O software é fornecido &quot;tal como está&quot;. Na medida permitida por lei, o fornecedor não responde por lucros cessantes nem por danos indiretos decorrentes do uso.</p>
+      <h2>7. Incumprimento</h2>
+      <p>O não pagamento ou a violação destes termos permite ao fornecedor suspender ou revogar a licença.</p>
+      <h2>8. Lei aplicável</h2>
+      <p>Aplica-se a lei portuguesa. Para litígios é competente o foro da comarca de [comarca], com renúncia a qualquer outro.</p>
+      <p>Contacto: suporte@solidlynx.pt</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© {new Date().getFullYear()} SolidLynx</span>
+      <span><a href={`${base}/termos`}>Termos</a> · <a href={`${base}/privacidade`}>Privacidade</a></span>
+    </div>
+  </footer>
+</Layout>

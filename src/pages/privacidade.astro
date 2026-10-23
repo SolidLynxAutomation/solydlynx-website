@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<Layout title="Política de Privacidade · SolidLynx" description="Política de privacidade do SolidLynx.">
+  <nav>
+    <div class="wrap">
+      <a class="logo" href={`${base}/`}><img src={`${base}/logo.png`} alt="SolidLynx" height="40" /></a>
+      <ul>
+        <li><a href={`${base}/#servicos`}>Serviços</a></li>
+        <li><a href={`${base}/#como`}>Como funciona</a></li>
+        <li><a href={`${base}/#preco`}>Preço</a></li>
+        <li><a href={`${base}/#contacto`}>Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="doc">
+    <div class="wrap">
+      <h1>POLÍTICA DE PRIVACIDADE — SolidLynx</h1>
+      <p class="doc-sub">(versão 1.0)  ·  RASCUNHO — a rever juridicamente</p>
+      <h2>1. Responsável pelo tratamento</h2>
+      <p>SolidLynx (NIF [NIF], [morada]), contacto: suporte@solidlynx.pt.</p>
+      <h2>2. Que dados recolhemos</h2>
+      <p>Para validar a licença e prevenir uso não autorizado, o programa envia ao nosso servidor: a <strong>impressão digital do computador</strong> (um código derivado do Windows e do disco), o <strong>endereço IP</strong>, o <strong>nome do computador</strong>, o <strong>utilizador do sistema</strong>, e a <strong>versão</strong> do programa. Não recolhemos os seus ficheiros de trabalho.</p>
+      <h2>3. Finalidades e base legal</h2>
+      <ul><li>Validação da licença e funcionamento do serviço — execução do contrato.</li><li>Prevenção de fraude/uso indevido (ex.: deteção de partilha) e segurança — interesse legítimo.</li></ul>
+      <h2>4. Conservação</h2>
+      <p>Os dados são conservados enquanto a licença estiver ativa e pelo período necessário ao cumprimento de obrigações legais; depois são eliminados.</p>
+      <h2>5. Partilha e transferências</h2>
+      <p>Os dados não são vendidos nem partilhados com terceiros para fins de marketing. O servidor está em Portugal. O acesso ao servidor passa pela Cloudflare (prestador de serviços de rede), que pode tratar dados técnicos da ligação, como o endereço IP, fora do Espaço Económico Europeu.</p>
+      <h2>6. Os seus direitos</h2>
+      <p>Tem direito de aceder, retificar, apagar, limitar, opor-se ao tratamento e à portabilidade dos seus dados. Para os exercer, contacte suporte@solidlynx.pt. Pode também reclamar junto da Comissão Nacional de Proteção de Dados (CNPD), www.cnpd.pt.</p>
+      <h2>7. Segurança</h2>
+      <p>Os dados circulam por ligação cifrada (HTTPS) e são protegidos contra acesso não autorizado.</p>
+      <p>Contacto: suporte@solidlynx.pt</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© {new Date().getFullYear()} SolidLynx</span>
+      <span><a href={`${base}/termos`}>Termos</a> · <a href={`${base}/privacidade`}>Privacidade</a></span>
+    </div>
+  </footer>
+</Layout>
