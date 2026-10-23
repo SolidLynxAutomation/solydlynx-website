@@ -39,20 +39,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
       // ---------- bolas gradientes a vaguear ----------
       const blobs = [...document.querySelectorAll<HTMLElement>(".bg .m")].map((el, i) => ({
-        el, x: Math.random() * innerWidth, y: Math.random() * innerHeight, tx: 0, ty: 0, t: 0, speed: 0.12 + Math.random() * 0.18, i,
+        el, x: Math.random() * innerWidth, y: Math.random() * innerHeight, tx: 0, ty: 0, t: 0, speed: 0.25 + Math.random() * 0.3, i,
+        // quanto a mancha se desloca com o scroll (cada uma ao seu ritmo, algumas em sentido contrário)
+        f: [0.35, -0.25, 0.55, -0.4, 0.2][i % 5],
       }));
+      // posição de scroll suavizada, para as manchas deslizarem em vez de saltarem
+      let sy = scrollY;
       const pick = (b: typeof blobs[number]) => {
         b.tx = Math.random() * innerWidth; b.ty = Math.random() * innerHeight;
-        b.t = 5 + Math.random() * 7; b.speed = 0.12 + Math.random() * 0.2;
+        b.t = 3 + Math.random() * 4; b.speed = 0.25 + Math.random() * 0.35;
       };
       blobs.forEach(pick);
       const draw = (b: typeof blobs[number]) => {
         const r = b.el.offsetWidth / 2;
-        b.el.style.transform = `translate3d(${b.x - r}px, ${b.y - r}px, 0)`;
+        // desloca com o scroll e dá a volta ao ecrã quando sai por cima ou por baixo
+        const m = r + 100, h = innerHeight + 2 * m;
+        const y = ((b.y - sy * b.f + m) % h + h) % h - m;
+        const x = b.x + Math.sin(sy / 600 + b.i) * 60;
+        b.el.style.transform = `translate3d(${x - r}px, ${y - r}px, 0)`;
       };
       let last = performance.now();
       const tick = (now: number) => {
         const dt = Math.min(0.05, (now - last) / 1000); last = now;
+        sy += (scrollY - sy) * (1 - Math.exp(-6 * dt));
         for (const b of blobs) {
           b.t -= dt; if (b.t <= 0) pick(b);
           const k = 1 - Math.exp(-b.speed * dt);

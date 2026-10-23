@@ -15,7 +15,6 @@ const steps = [
 ];
 const principles = [
   { t: "Pagas só o que usas", d: "Cada funcionalidade tem preço próprio. Pagas pelo que usas." },
-  { t: "Sem fidelização", d: "Cancelas quando quiseres." },
   { t: "Contacto direto", d: "Falas com quem desenvolve." },
 ];
 ---
@@ -38,7 +37,7 @@ const principles = [
       <div class="wrap">
         <span class="pill">Automação CAD · SaaS</span>
         <h1>Foca-te no que <span class="grad">interessa</span></h1>
-        <p class="lead">Automatizamos tarefas repetitivas em software CAD, em formato SaaS.</p>
+        <p class="lead">Automatizamos tarefas repetitivas em software CAD, em formato SaaS: desenvolvimento e correções contínuas, com adaptação rápida a mudanças no teu ambiente de trabalho.</p>
         <div class="cta">
           <a class="btn primary" href="#contacto">Pedir proposta</a>
           <a class="btn ghost" href="#servicos">Ver serviços</a>
@@ -62,10 +61,13 @@ const principles = [
       <div class="wrap">
         <p class="eyebrow">Como funciona</p>
         <h2>Em <span class="grad">4 passos</span></h2>
-        <div class="grid steps">
-          {steps.map(s => (
-            <article class="card"><h3>{s.t}</h3><p>{s.d}</p></article>
-          ))}
+        <div class="steps-wrap">
+          <div class="grid steps">
+            {steps.map(s => (
+              <article class="card"><h3>{s.t}</h3><p>{s.d}</p></article>
+            ))}
+          </div>
+          <div class="loop" aria-hidden="true"><span>Melhoria contínua</span></div>
         </div>
       </div>
     </section>
