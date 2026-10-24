@@ -1,12 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import HeroDrawing from "../components/HeroDrawing.astro";
 import { empresa } from "../data/empresa";
-const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const email = empresa.emailGeral;
 const services = [
-  { t: "Tarefas CAD repetitivas", d: "Desenhos, listas e exportações geradas sozinhas." },
-  { t: "Desenho paramétrico", d: "Variantes a partir de parâmetros, sem redesenhar." },
-  { t: "Processos industriais", d: "Do CAD ao ERP e à máquina, sem copiar dados." },
+  { t: "Tarefas CAD repetitivas", d: "Desenhos, listas e exportações geradas sozinhas, sem repetir os mesmos cliques todos os dias.", k: ["Desenhos", "Listas", "Exportações"] },
+  { t: "Desenho paramétrico", d: "Defines os parâmetros uma vez e as variantes saem sem redesenhar.", k: ["Parâmetros", "Variantes", "Regras"] },
+  { t: "Processos industriais", d: "Do CAD ao ERP e à máquina, sem copiar dados à mão.", k: ["CAD", "ERP", "Máquina"] },
 ];
 const steps = [
   { t: "Fala-nos do processo", d: "Contas-nos o que se repete." },
@@ -14,91 +16,106 @@ const steps = [
   { t: "Desenvolvemos", d: "Entregas curtas e frequentes." },
   { t: "Entregamos", d: "Pronto a usar, em SaaS." },
 ];
-const principles = [
-  { t: "Pagas só o que usas", d: "Cada funcionalidade tem preço próprio. Pagas pelo que usas." },
-  { t: "Contacto direto", d: "Falas com quem desenvolve." },
+const spec = [
+  { k: "Modelo", v: "Subscrição (SaaS)" },
+  { k: "Preço", v: "Por funcionalidade: pagas só o que usas" },
+  { k: "Desenvolvimento", v: "Contínuo, com entregas curtas e frequentes" },
+  { k: "Correções", v: "Incluídas na subscrição" },
+  { k: "Contacto", v: "Direto, com quem desenvolve" },
 ];
 ---
 <Layout title="SolidLynx · Foca-te no que interessa" description="Automatizamos tarefas repetitivas em software CAD, em formato SaaS.">
-  <nav>
-    <div class="wrap">
-      <a class="logo" href="#"><img src={`${base}/logo.png`} alt="SolidLynx" height="40" />
-      </a>
-      <ul>
-        <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#como">Como funciona</a></li>
-        <li><a href="#preco">Preço</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </div>
-  </nav>
+  <Header />
 
   <main>
-    <header class="hero">
+    <section class="hero">
       <div class="wrap">
-        <span class="pill">Automação CAD · SaaS</span>
-        <h1>Foca-te no que <span class="grad">interessa</span></h1>
-        <p class="lead">Automatizamos tarefas repetitivas em software CAD, em formato SaaS: desenvolvimento e correções contínuas, com adaptação rápida a mudanças no teu ambiente de trabalho.</p>
-        <div class="cta">
-          <a class="btn primary" href="#contacto">Pedir proposta</a>
-          <a class="btn ghost" href="#servicos">Ver serviços</a>
-        </div>
-      </div>
-    </header>
-
-    <section id="servicos">
-      <div class="wrap">
-        <p class="eyebrow">Serviços</p>
-        <h2>O que <span class="grad">fazemos</span></h2>
-        <div class="grid">
-          {services.map(s => (
-            <article class="card"><h3>{s.t}</h3><p>{s.d}</p>{s.href && <a class="more" href={s.href}>Saber mais →</a>}</article>
-          ))}
+        <p class="hero-meta label"><span>Automação CAD</span><span>SaaS</span><span>Desenvolvimento contínuo</span></p>
+        <h1>Foca-te no que<br />interessa<span class="dot">.</span></h1>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="lead">Automatizamos tarefas repetitivas em software CAD, em formato SaaS: desenvolvimento e correções contínuas, com adaptação rápida a mudanças no teu ambiente de trabalho.</p>
+            <div class="cta">
+              <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
+              <a class="link" href="#como">Como funciona</a>
+            </div>
+          </div>
+          <figure class="hero-fig"><HeroDrawing /></figure>
         </div>
       </div>
     </section>
 
-    <section id="como">
+    <section id="servicos" class="section">
       <div class="wrap">
-        <p class="eyebrow">Como funciona</p>
-        <h2>Em <span class="grad">4 passos</span></h2>
-        <div class="steps-wrap">
-          <div class="grid steps">
-            {steps.map(s => (
-              <article class="card"><h3>{s.t}</h3><p>{s.d}</p></article>
+        <div class="sec-head">
+          <p class="sec-label"><b>01</b>Serviços</p>
+          <h2>O que fazemos</h2>
+        </div>
+        <ol class="svc">
+          {services.map((s, i) => (
+            <li>
+              <span class="svc-n">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{s.t}</h3>
+              <div class="svc-body">
+                <p>{s.d}</p>
+                <ul class="tags">{s.k.map(k => <li>{k}</li>)}</ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section id="como" class="section sheet">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-label"><b>02</b>Como funciona</p>
+          <h2>Em 4 passos</h2>
+        </div>
+        <div class="flow-wrap">
+          <ol class="flow">
+            {steps.map((s, i) => (
+              <li>
+                <span class="flow-node" aria-hidden="true"></span>
+                <span class="flow-n">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </li>
             ))}
-          </div>
+          </ol>
           <div class="loop" aria-hidden="true"><span>Melhoria contínua</span></div>
         </div>
       </div>
     </section>
 
-    <section id="preco">
+    <section id="preco" class="section">
       <div class="wrap">
-        <p class="eyebrow">Preço</p>
-        <h2>Simplicidade e <span class="grad">eficiência</span></h2>
-        <div class="grid">
-          {principles.map(s => (
-            <article class="card glow"><h3>{s.t}</h3><p>{s.d}</p></article>
-          ))}
+        <div class="sec-head">
+          <p class="sec-label"><b>03</b>Preço</p>
+          <h2>Simplicidade e eficiência</h2>
+        </div>
+        <div class="price">
+          <div class="price-lead">
+            <p class="price-big">Pagas só o que usas.</p>
+            <p>Cada funcionalidade tem preço próprio. E falas sempre com quem desenvolve.</p>
+            <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
+          </div>
+          <dl class="spec">
+            {spec.map(s => <div><dt>{s.k}</dt><dd>{s.v}</dd></div>)}
+          </dl>
         </div>
       </div>
     </section>
 
     <section id="contacto" class="contact">
       <div class="wrap">
-        <div class="box">
-          <h2>Pronto para te focares no que <span class="grad">interessa</span>?</h2>
-          <a class="btn primary" href={`mailto:${email}`}>{email}</a>
-        </div>
+        <p class="sec-label"><b>04</b>Contacto</p>
+        <h2>Pronto para te focares no que interessa?</h2>
+        <a class="mail" href={`mailto:${email}`}>{email} <span class="arr" aria-hidden="true">→</span></a>
+        <p class="contact-note">Conta-nos o que se repete no teu dia a dia. Respondemos com uma proposta.</p>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap">
-      <span>© {new Date().getFullYear()} SolidLynx · <a href={`${base}/termos`}>Termos</a> · <a href={`${base}/privacidade`}>Privacidade</a></span>
-      <span>Foca-te no que interessa</span>
-    </div>
-  </footer>
+  <Footer />
 </Layout>

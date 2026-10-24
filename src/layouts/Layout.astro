@@ -7,130 +7,42 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 <html lang="pt-PT">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#151618" />
     <link rel="icon" type="image/png" sizes="512x512" href={`${base}/favicon-512.png`} />
     <link rel="icon" href={`${base}/favicon.ico`} sizes="48x48 32x32 16x16" />
     <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=JetBrains+Mono:wght@400;500&display=swap" />
     <title>{title}</title>
   </head>
   <body>
-    <div class="bg" aria-hidden="true">
-      <span class="m m1"></span>
-      <span class="m m2"></span>
-      <span class="m m3"></span>
-      <span class="m m4"></span>
-      <span class="m m5"></span>
-    </div>
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <filter id="liquid" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="4" result="n" />
-        <feGaussianBlur in="n" stdDeviation="2" result="nb" />
-        <feDisplacementMap in="SourceGraphic" in2="nb" scale="28" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </svg>
     <slot />
-<script>
-      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (/Chrome\//.test(navigator.userAgent) && !/Edg\/|OPR\//.test(navigator.userAgent) || /Edg\//.test(navigator.userAgent)) document.documentElement.classList.add("lg-svg");
-
-      // elementos glass
-      document.querySelectorAll("nav .wrap, .card, .pill, .btn.ghost, .flow li, .contact .box").forEach(el => el.classList.add("glass"));
-
-      // ---------- bolas gradientes a vaguear ----------
-      const blobs = [...document.querySelectorAll<HTMLElement>(".bg .m")].map((el, i) => ({
-        el, x: Math.random() * innerWidth, y: Math.random() * innerHeight, tx: 0, ty: 0, t: 0, speed: 0.25 + Math.random() * 0.3, i,
-        // quanto a mancha se desloca com o scroll (cada uma ao seu ritmo, algumas em sentido contrário)
-        f: [0.35, -0.25, 0.55, -0.4, 0.2][i % 5],
-      }));
-      // posição de scroll suavizada, para as manchas deslizarem em vez de saltarem
-      let sy = scrollY;
-      const pick = (b: typeof blobs[number]) => {
-        b.tx = Math.random() * innerWidth; b.ty = Math.random() * innerHeight;
-        b.t = 3 + Math.random() * 4; b.speed = 0.25 + Math.random() * 0.35;
+    <script>
+      // ---------- menu (telemóvel) ----------
+      const top = document.querySelector<HTMLElement>(".top");
+      const toggle = top?.querySelector<HTMLButtonElement>(".nav-toggle");
+      const setOpen = (open: boolean) => {
+        top?.classList.toggle("open", open);
+        toggle?.setAttribute("aria-expanded", String(open));
+        toggle?.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
       };
-      blobs.forEach(pick);
-      const draw = (b: typeof blobs[number]) => {
-        const r = b.el.offsetWidth / 2;
-        // desloca com o scroll e dá a volta ao ecrã quando sai por cima ou por baixo
-        const m = r + 100, h = innerHeight + 2 * m;
-        const y = ((b.y - sy * b.f + m) % h + h) % h - m;
-        const x = b.x + Math.sin(sy / 600 + b.i) * 60;
-        b.el.style.transform = `translate3d(${x - r}px, ${y - r}px, 0)`;
-      };
-      let last = performance.now();
-      const tick = (now: number) => {
-        const dt = Math.min(0.05, (now - last) / 1000); last = now;
-        sy += (scrollY - sy) * (1 - Math.exp(-6 * dt));
-        for (const b of blobs) {
-          b.t -= dt; if (b.t <= 0) pick(b);
-          const k = 1 - Math.exp(-b.speed * dt);
-          b.x += (b.tx - b.x) * k; b.y += (b.ty - b.y) * k;
-          draw(b);
-        }
-        requestAnimationFrame(tick);
-      };
-      blobs.forEach(draw);
-      if (!reduce) requestAnimationFrame(tick);
-
-      // ---------- brilho especular que segue o rato ----------
-      addEventListener("pointermove", e => {
-        const el = (e.target as Element)?.closest?.(".glass") as HTMLElement | null;
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--mx", e.clientX - r.left + "px");
-        el.style.setProperty("--my", e.clientY - r.top + "px");
-      }, { passive: true });
-
-      // ---------- header dinâmico ----------
-      const nav = document.querySelector("nav");
-      const bar = nav?.querySelector(".wrap");
-      const links = [...(nav?.querySelectorAll<HTMLAnchorElement>("ul a") ?? [])];
-      if (bar) {
-        bar.insertAdjacentHTML("beforeend", '<span class="prog"><i></i></span>');
-        nav!.querySelector("ul")?.insertAdjacentHTML("afterbegin", '<span class="pillbar"></span>');
-        bar.insertAdjacentHTML("beforeend", '<button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>');
-      }
-      const toggle = nav?.querySelector<HTMLButtonElement>(".nav-toggle");
-      const setOpen = (open: boolean) => { nav?.classList.toggle("open", open); toggle?.setAttribute("aria-expanded", String(open)); };
-      toggle?.addEventListener("click", () => setOpen(!nav?.classList.contains("open")));
-      nav?.querySelectorAll("ul a").forEach(a => a.addEventListener("click", () => setOpen(false)));
+      toggle?.addEventListener("click", () => setOpen(!top?.classList.contains("open")));
+      top?.querySelectorAll(".menu a").forEach(a => a.addEventListener("click", () => setOpen(false)));
       addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
-      addEventListener("pointerdown", e => { if (!nav?.contains(e.target as Node)) setOpen(false); });
-      const pillbar = nav?.querySelector<HTMLElement>(".pillbar");
-      const movePill = (a?: HTMLElement | null) => {
-        if (!pillbar) return;
-        if (!a) { pillbar.style.opacity = "0"; return; }
-        pillbar.style.opacity = "1";
-        pillbar.style.width = a.offsetWidth + "px";
-        pillbar.style.transform = `translateX(${a.offsetLeft}px)`;
-      };
-      let active: HTMLAnchorElement | null = null;
-      links.forEach(a => {
-        a.addEventListener("pointerenter", () => movePill(a));
-        a.addEventListener("focus", () => movePill(a));
-      });
-      nav?.querySelector("ul")?.addEventListener("pointerleave", () => movePill(active));
-      const sections = links.map(a => ({ a, s: a.hash ? document.querySelector(a.hash) : null })).filter(x => x.s);
-      const io = new IntersectionObserver(es => {
-        for (const e of es) if (e.isIntersecting) {
-          active = sections.find(x => x.s === e.target)?.a ?? null;
-          links.forEach(l => l.classList.toggle("on", l === active));
-          movePill(active);
-        }
-      }, { rootMargin: "-40% 0px -55% 0px" });
-      sections.forEach(x => io.observe(x.s!));
+      addEventListener("pointerdown", e => { if (top && !top.contains(e.target as Node)) setOpen(false); });
 
-      let ticking = false;
-      const update = () => {
-        const y = Math.max(0, scrollY);
-        const max = document.documentElement.scrollHeight - innerHeight;
-        nav?.style.setProperty("--p", String(max > 0 ? y / max : 0));
-        nav?.classList.toggle("compact", y > 40);
-        ticking = false;
-      };
-      addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-      update();
+      // ---------- link da secção visível ----------
+      const links = [...document.querySelectorAll<HTMLAnchorElement>(".menu a")];
+      const alvos = links
+        .map(a => ({ a, s: a.pathname === location.pathname && a.hash ? document.querySelector(a.hash) : null }))
+        .filter((x): x is { a: HTMLAnchorElement; s: Element } => !!x.s);
+      const io = new IntersectionObserver(es => {
+        for (const e of es) if (e.isIntersecting) links.forEach(l => l.classList.toggle("on", l === alvos.find(x => x.s === e.target)?.a));
+      }, { rootMargin: "-45% 0px -50% 0px" });
+      alvos.forEach(x => io.observe(x.s));
     </script>
   </body>
 </html>

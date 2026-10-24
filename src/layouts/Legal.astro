@@ -2,6 +2,8 @@
 // Layout das páginas legais. As secções são os <h2 id="..."> da página:
 // são numeradas automaticamente e formam o índice lateral.
 import Layout from "./Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import { empresa, documentos, identificacao, emFalta } from "../data/empresa";
 
 interface Props {
@@ -34,29 +36,19 @@ const docs = [
 ];
 ---
 <Layout title={title} description={description}>
-  <nav>
-    <div class="wrap">
-      <a class="logo" href={`${base}/`}><img src={`${base}/logo.png`} alt="SolidLynx" height="40" /></a>
-      <ul>
-        <li><a href={`${base}/#servicos`}>Serviços</a></li>
-        <li><a href={`${base}/#como`}>Como funciona</a></li>
-        <li><a href={`${base}/#preco`}>Preço</a></li>
-        <li><a href={`${base}/#contacto`}>Contacto</a></li>
-      </ul>
-    </div>
-  </nav>
+  <Header />
 
   <main class="doc">
     <div class="wrap">
       <header class="doc-head">
-        <span class="pill glass">Informação legal</span>
-        <h1>{titulo} <span class="grad">{destaque}</span></h1>
+        <p class="label">Informação legal</p>
+        <h1>{titulo} {destaque}</h1>
         <p class="doc-meta">
           <span>Versão {versao}</span>
           <span>Em vigor desde <time datetime={vigor}>{data}</time></span>
           <span><button class="doc-print" type="button">Imprimir ou guardar em PDF</button></span>
         </p>
-        <div class="doc-tabs glass" role="navigation" aria-label="Documentos legais">
+        <div class="doc-tabs" role="navigation" aria-label="Documentos legais">
           {docs.map(d => <a href={d.href} aria-current={d.key === doc ? "page" : undefined}>{d.t}</a>)}
         </div>
       </header>
@@ -71,7 +63,7 @@ const docs = [
 
         <article class="doc-body">
           {Astro.slots.has("resumo") && (
-            <aside class="summary card glass" aria-label="Resumo">
+            <aside class="summary" aria-label="Resumo">
               <p class="summary-title">Em resumo</p>
               <ul class="checks"><slot name="resumo" /></ul>
               <p class="summary-note">Este resumo ajuda a ler o documento, mas não substitui o texto completo.</p>
@@ -80,25 +72,20 @@ const docs = [
 
           <Fragment set:html={corpo} />
 
-          <div class="doc-contact card glass">
+          <div class="doc-contact">
             <div>
               <h3>Dúvidas sobre este documento?</h3>
               <p>Escreva-nos: responde-lhe quem desenvolve o SolidLynx.</p>
               {(empresa.nif || empresa.morada) && <p class="who">{identificacao}</p>}
             </div>
-            <a class="btn primary" href={`mailto:${empresa.emailSuporte}`}>{empresa.emailSuporte}</a>
+            <a class="btn" href={`mailto:${empresa.emailSuporte}`}>{empresa.emailSuporte}</a>
           </div>
         </article>
       </div>
     </div>
   </main>
 
-  <footer>
-    <div class="wrap">
-      <span>© {new Date().getFullYear()} SolidLynx · <a href={`${base}/termos`}>Termos</a> · <a href={`${base}/privacidade`}>Privacidade</a></span>
-      <span>Foca-te no que interessa</span>
-    </div>
-  </footer>
+  <Footer />
 </Layout>
 
 <script>

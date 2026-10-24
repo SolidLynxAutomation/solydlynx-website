@@ -1,0 +1,17 @@
+---
+// Rodapé em forma de legenda de desenho técnico.
+import { empresa } from "../data/empresa";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<footer class="foot">
+  <div class="wrap">
+    <div class="tblock">
+      <a class="tb-logo" href={`${base}/`}><img src={`${base}/logo.png`} alt="SolidLynx" width="900" height="273" loading="lazy" /></a>
+      <div class="tb-cell"><span>Serviço</span>Automação de tarefas CAD</div>
+      <div class="tb-cell"><span>Contacto</span><a href={`mailto:${empresa.emailGeral}`}>{empresa.emailGeral}</a></div>
+      <div class="tb-cell"><span>Documentos</span><a href={`${base}/termos`}>Termos</a> · <a href={`${base}/privacidade`}>Privacidade</a></div>
+      <div class="tb-cell tb-wide"><span>Lema</span>Foca-te no que interessa</div>
+      <div class="tb-cell"><span>Rev.</span>© {new Date().getFullYear()} SolidLynx</div>
+    </div>
+  </div>
+</footer>
