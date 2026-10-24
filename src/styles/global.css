@@ -16,7 +16,7 @@
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --max: 1240px;
   --gutter: clamp(16px, 4vw, 40px);
-  --head: 64px;
+  --head: 76px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -54,12 +54,12 @@ a { color: inherit; }
 }
 .top-in { display: flex; align-items: center; gap: 40px; height: var(--head); }
 .logo { flex: none; }
-.logo img { height: 26px; width: auto; }
+.logo img { height: 38px; width: auto; }
 .menu { margin-left: auto; }
 .menu ul { display: flex; gap: 32px; list-style: none; padding: 0; }
-.menu a { position: relative; color: var(--muted); font-size: .92rem; text-decoration: none; transition: color .2s; }
+.menu a { position: relative; display: flex; align-items: center; height: var(--head); color: var(--muted); font-size: .95rem; text-decoration: none; transition: color .2s; }
 .menu a:hover, .menu a.on { color: var(--text); }
-.menu a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -21px; height: 2px; background: var(--accent); }
+.menu a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); }
 .nav-toggle { display: none; }
 
 /* ---------- hero ---------- */
@@ -154,7 +154,7 @@ a { color: inherit; }
 }
 .sheet .sec-label { color: var(--ink-muted); }
 .sheet + .section { border-top: 0; }
-.flow-wrap { position: relative; padding-bottom: 96px; }
+.flow-wrap { position: relative; padding-bottom: 120px; }
 .flow { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; }
 .flow::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: rgba(21,22,24,.35); }
 .flow li { position: relative; padding-right: 28px; }
@@ -164,13 +164,13 @@ a { color: inherit; }
 .flow h3 { margin-top: 8px; font-size: clamp(1.2rem, 1.8vw, 1.5rem); font-weight: 650; font-stretch: 108%; line-height: 1.15; letter-spacing: -.015em; }
 .flow p { margin-top: 10px; color: var(--ink-muted); }
 .loop {
-  position: absolute; left: calc(25% + 7px); width: 50%; bottom: 28px; height: 44px;
-  border: 1.5px dashed var(--accent); border-top: 0; pointer-events: none;
+  position: absolute; left: calc(25% + 6.5px); width: 50%; bottom: 34px; height: 60px;
+  border: 2px solid var(--accent); border-top: 0; pointer-events: none;
 }
-.loop::before { content: ""; position: absolute; left: -7.5px; top: -10px; border: 6.5px solid transparent; border-top: 0; border-bottom: 10px solid var(--accent); }
+.loop::before { content: ""; position: absolute; left: -10px; top: -16px; border: 9px solid transparent; border-top: 0; border-bottom: 16px solid var(--accent); }
 .loop span {
-  position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); padding: 0 12px; background: var(--paper);
-  color: var(--ink); font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
+  position: absolute; left: 50%; bottom: -15px; transform: translateX(-50%); padding: 6px 14px; background: var(--accent);
+  color: var(--on-accent); font-family: var(--mono); font-size: .75rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
 }
 
 /* preço */
@@ -202,7 +202,8 @@ a { color: inherit; }
 .tblock { display: grid; grid-template-columns: 1.3fr 1fr 1.2fr 1fr; gap: 1px; border: 1px solid var(--line); background: var(--line); }
 .tblock > * { padding: 16px 18px; background: var(--bg); font-size: .92rem; }
 .tb-logo { grid-row: span 2; display: flex; align-items: center; }
-.tb-logo img { height: 30px; width: auto; }
+.tb-logo { justify-content: center; }
+.tb-logo img { height: 64px; width: auto; }
 .tb-cell span { display: block; margin-bottom: 6px; color: var(--muted); font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; }
 .tb-cell a { text-decoration: none; overflow-wrap: anywhere; transition: color .2s; }
 .tb-cell a:hover { color: var(--accent); }
@@ -215,12 +216,14 @@ a { color: inherit; }
   .price-lead, .spec { grid-column: 1 / -1; }
 }
 @media (max-width: 820px) {
+  :root { --head: 64px; }
+  .logo img { height: 30px; }
   .top-in { gap: 16px; }
   .top-cta { margin-left: auto; }
   .menu { position: absolute; top: 100%; left: 0; right: 0; display: none; border-bottom: 1px solid var(--line); background: var(--bg); }
   .top.open .menu { display: block; }
   .menu ul { flex-direction: column; gap: 0; padding: 4px var(--gutter) 16px; }
-  .menu a { display: block; padding: 14px 0; border-bottom: 1px solid var(--line-soft); color: var(--text); font-size: 1.1rem; }
+  .menu a { display: block; height: auto; padding: 14px 0; border-bottom: 1px solid var(--line-soft); color: var(--text); font-size: 1.1rem; }
   .menu a.on::after { display: none; }
   .nav-toggle {
     display: grid; place-items: center; width: 40px; height: 40px; padding: 0; cursor: pointer;
@@ -243,12 +246,14 @@ a { color: inherit; }
   .flow li { padding: 0 56px 32px 0; }
   .flow-node { position: absolute; left: -36px; top: 0; }
   .flow-n { margin-top: 0; }
-  .loop { left: auto; right: 4px; top: calc(25% + 7px); bottom: auto; width: 28px; height: 50%; border: 1.5px dashed var(--accent); border-left: 0; }
-  .loop::before { left: -10px; top: -7.5px; border: 6.5px solid transparent; border-left: 0; border-right: 10px solid var(--accent); }
-  .loop span { left: auto; right: -11px; bottom: auto; top: 50%; padding: 10px 0; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; }
+  .flow li { padding-right: 64px; }
+  .loop { left: auto; right: 14px; top: calc(25% + 6.5px); bottom: auto; width: 26px; height: 50%; border: 2px solid var(--accent); border-left: 0; }
+  .loop::before { left: -16px; top: -10px; border: 9px solid transparent; border-left: 0; border-right: 16px solid var(--accent); }
+  .loop span { left: auto; right: -15px; bottom: auto; top: 50%; padding: 14px 6px; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; }
   .spec > div { grid-template-columns: 1fr; gap: 4px; }
   .tblock { grid-template-columns: 1fr 1fr; }
-  .tb-logo { grid-column: 1 / -1; grid-row: auto; }
+  .tb-logo { grid-column: 1 / -1; grid-row: auto; justify-content: flex-start; }
+  .tb-logo img { height: 48px; }
 }
 @media (max-width: 480px) {
   .hero-meta { gap: 6px 18px; }
