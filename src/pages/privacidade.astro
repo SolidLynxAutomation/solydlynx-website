@@ -1,47 +1,145 @@
 ---
-import Layout from "../layouts/Layout.astro";
-const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+// Cada <h2 id="..."> é uma secção: a numeração e o índice são gerados sozinhos.
+// Ao alterar o texto, suba a versão e a data em src/data/empresa.ts.
+import Legal from "../layouts/Legal.astro";
+import { empresa, identificacao } from "../data/empresa";
+const { emailSuporte: suporte } = empresa;
+const finalidades = [
+  { f: "Validar a licença e fazer funcionar o serviço", d: "Dados de validação da licença", b: "Execução do contrato" },
+  { f: "Prevenir fraude e usos indevidos (ex.: partilha de licenças) e garantir a segurança", d: "Dados de validação da licença", b: "Interesse legítimo" },
+  { f: "Suporte e correção de erros", d: "Resumo técnico de cada trabalho", b: "Execução do contrato e interesse legítimo" },
+  { f: "Responder a pedidos e gerir a relação com o Cliente", d: "Contactos e mensagens", b: "Diligências pré-contratuais e execução do contrato" },
+  { f: "Faturação e obrigações fiscais", d: "Dados de faturação", b: "Cumprimento de obrigação legal" },
+  { f: "Mostrar este site", d: "Endereço IP e dados técnicos do navegador", b: "Interesse legítimo" },
+];
+const conservacao = [
+  { d: "Dados de validação da licença", p: "Enquanto a licença estiver ativa e, depois, só pelo tempo necessário ao cumprimento de obrigações legais. Em seguida, são apagados." },
+  { d: "Resumos técnicos de cada trabalho", p: "180 dias. Depois, são apagados." },
+  { d: "Contactos e mensagens", p: "Enquanto durar a relação com o Cliente e, depois, apenas o necessário para cumprir obrigações legais ou defender direitos." },
+  { d: "Dados de faturação", p: "Pelo prazo exigido pela legislação fiscal." },
+];
+const direitos = [
+  { t: "Acesso", d: "Saber que dados tratamos sobre si e obter uma cópia." },
+  { t: "Retificação", d: "Corrigir dados inexatos ou incompletos." },
+  { t: "Apagamento", d: "Pedir que apaguemos os seus dados." },
+  { t: "Limitação", d: "Pedir que suspendamos o tratamento em certos casos." },
+  { t: "Oposição", d: "Opor-se aos tratamentos baseados no interesse legítimo." },
+  { t: "Portabilidade", d: "Receber os dados que nos forneceu num formato de uso corrente." },
+];
 ---
-<Layout title="Política de Privacidade · SolidLynx" description="Política de privacidade do SolidLynx.">
-  <nav>
-    <div class="wrap">
-      <a class="logo" href={`${base}/`}><img src={`${base}/logo.png`} alt="SolidLynx" height="40" /></a>
-      <ul>
-        <li><a href={`${base}/#servicos`}>Serviços</a></li>
-        <li><a href={`${base}/#como`}>Como funciona</a></li>
-        <li><a href={`${base}/#preco`}>Preço</a></li>
-        <li><a href={`${base}/#contacto`}>Contacto</a></li>
+<Legal
+  doc="privacidade"
+  title="Política de Privacidade · SolidLynx"
+  description="Que dados o SolidLynx trata, para quê, durante quanto tempo e quais são os seus direitos."
+  titulo="Política de"
+  destaque="Privacidade"
+>
+  <Fragment slot="resumo">
+    <li>Usamos os dados apenas para validar a licença, prevenir usos indevidos e dar suporte.</li>
+    <li>O conteúdo dos seus ficheiros de trabalho nunca é enviado.</li>
+    <li>Não vendemos dados nem os usamos para publicidade.</li>
+    <li>Os resumos técnicos de cada trabalho são apagados ao fim de 180 dias.</li>
+    <li>Este site não usa cookies nem ferramentas de estatísticas.</li>
+  </Fragment>
+
+  <h2 id="responsavel">Responsável pelo tratamento</h2>
+  <p>O responsável pelo tratamento dos dados pessoais descritos nesta política é <strong>{identificacao}</strong> («SolidLynx» ou «nós»).</p>
+  <p>Para qualquer questão sobre privacidade, ou para exercer os seus direitos, contacte <a href={`mailto:${suporte}`}>{suporte}</a>.</p>
+
+  <h2 id="ambito">A que se aplica</h2>
+  <p>Esta política aplica-se aos dados tratados pelo programa SolidLynx (o «Programa»), neste site ({empresa.site}) e nos contactos com clientes.</p>
+  <p>Muitos dos dados que o Programa envia são técnicos, mas alguns, como o endereço IP ou o nome de utilizador do Windows, podem identificar uma pessoa. Por isso, tratamo-los como dados pessoais.</p>
+
+  <h2 id="dados">Que dados tratamos</h2>
+  <h3>Validação da licença</h3>
+  <p>Para validar a licença e prevenir usos não autorizados, o Programa envia ao nosso servidor:</p>
+  <ul>
+    <li>a <strong>impressão digital do computador</strong>, um código derivado do Windows e do disco que identifica a máquina;</li>
+    <li>o <strong>endereço IP</strong>;</li>
+    <li>o <strong>nome do computador</strong>;</li>
+    <li>o <strong>utilizador do sistema</strong> (Windows);</li>
+    <li>a <strong>versão</strong> do Programa;</li>
+    <li>a data e a hora de cada validação.</li>
+  </ul>
+
+  <h3>Resumo técnico de cada trabalho</h3>
+  <p>No fim de cada trabalho (cada execução de uma automação), o Programa envia um resumo técnico, para podermos resolver problemas sem ser preciso o Cliente reportá-los.</p>
+  <div class="split">
+    <div class="yes">
+      <p class="split-title">O que é enviado</p>
+      <ul class="marks">
+        <li>quantos móveis foram processados;</li>
+        <li>que etapas correram e a duração do trabalho;</li>
+        <li>os códigos de erro e de aviso;</li>
+        <li>a mensagem de erro devolvida pelo AlphaCAM ou pelo bSuite;</li>
+        <li>as janelas (pop-ups) que estes programas mostraram: título, texto e botões.</li>
       </ul>
     </div>
-  </nav>
-
-  <main class="doc">
-    <div class="wrap">
-      <h1>POLÍTICA DE PRIVACIDADE — SolidLynx</h1>
-      <p class="doc-sub">(versão 1.0)  ·  RASCUNHO — a rever juridicamente</p>
-      <h2>1. Responsável pelo tratamento</h2>
-      <p>SolidLynx (NIF [NIF], [morada]), contacto: suporte@solidlynx-automation.com.</p>
-      <h2>2. Que dados recolhemos</h2>
-      <p>Para validar a licença e prevenir uso não autorizado, o programa envia ao nosso servidor: a <strong>impressão digital do computador</strong> (um código derivado do Windows e do disco), o <strong>endereço IP</strong>, o <strong>nome do computador</strong>, o <strong>utilizador do sistema</strong>, e a <strong>versão</strong> do programa. Não recolhemos os seus ficheiros de trabalho.</p>
-      <p>No fim de cada trabalho, o programa envia também um <strong>resumo técnico</strong>: quantos móveis, que etapas correram, a duração, os códigos de erro e aviso, a mensagem de erro devolvida pelo AlphaCAM/bSuite e as janelas (pop-ups) que estes programas mostraram (título, texto e botões). Caminhos, nomes de ficheiros e nomes dos móveis são substituídos antes do envio; o conteúdo dos ficheiros nunca é enviado.</p>
-      <h2>3. Finalidades e base legal</h2>
-      <ul><li>Validação da licença e funcionamento do serviço — execução do contrato.</li><li>Prevenção de fraude/uso indevido (ex.: deteção de partilha) e segurança — interesse legítimo.</li><li>Suporte e correção de erros (o resumo técnico de cada trabalho, para resolvermos problemas sem ser preciso o cliente reportá-los) — execução do contrato e interesse legítimo.</li></ul>
-      <h2>4. Conservação</h2>
-      <p>Os dados são conservados enquanto a licença estiver ativa e pelo período necessário ao cumprimento de obrigações legais; depois são eliminados. Os resumos técnicos de cada trabalho são apagados ao fim de 180 dias.</p>
-      <h2>5. Partilha e transferências</h2>
-      <p>Os dados não são vendidos nem partilhados com terceiros para fins de marketing. O servidor está em Portugal. O acesso ao servidor passa pela Cloudflare (prestador de serviços de rede), que pode tratar dados técnicos da ligação, como o endereço IP, fora do Espaço Económico Europeu.</p>
-      <h2>6. Os seus direitos</h2>
-      <p>Tem direito de aceder, retificar, apagar, limitar, opor-se ao tratamento e à portabilidade dos seus dados. Para os exercer, contacte suporte@solidlynx-automation.com. Pode também reclamar junto da Comissão Nacional de Proteção de Dados (CNPD), www.cnpd.pt.</p>
-      <h2>7. Segurança</h2>
-      <p>Os dados circulam por ligação cifrada (HTTPS) e são protegidos contra acesso não autorizado.</p>
-      <p>Contacto: suporte@solidlynx-automation.com</p>
+    <div class="no">
+      <p class="split-title">O que nunca é enviado</p>
+      <ul class="marks">
+        <li>o conteúdo dos ficheiros de trabalho;</li>
+        <li>os caminhos e os nomes dos ficheiros;</li>
+        <li>os nomes dos móveis.</li>
+      </ul>
+      <p class="split-note">Caminhos, nomes de ficheiros e nomes dos móveis são substituídos antes do envio, mesmo quando aparecem numa mensagem de erro.</p>
     </div>
-  </main>
+  </div>
 
-  <footer>
-    <div class="wrap">
-      <span>© {new Date().getFullYear()} SolidLynx</span>
-      <span><a href={`${base}/termos`}>Termos</a> · <a href={`${base}/privacidade`}>Privacidade</a></span>
-    </div>
-  </footer>
-</Layout>
+  <h3>Contactos e faturação</h3>
+  <p>Quando nos contacta ou contrata uma licença, tratamos os dados que nos fornece: nome, empresa, email, telefone, o conteúdo das mensagens e, para faturação, o NIF e a morada.</p>
+
+  <h3>Este site</h3>
+  <p>O site é estático: não tem formulários nem contas de utilizador. Como acontece com qualquer site, o serviço de alojamento e o serviço de tipos de letra recebem o seu endereço IP e dados técnicos do navegador, para conseguirem mostrar as páginas.</p>
+
+  <h2 id="finalidades">Para que usamos os dados</h2>
+  <div class="table-wrap">
+    <table class="doc-table">
+      <thead><tr><th>Finalidade</th><th>Dados</th><th>Base legal (RGPD)</th></tr></thead>
+      <tbody>
+        {finalidades.map(x => <tr><td>{x.f}</td><td data-label="Dados">{x.d}</td><td data-label="Base legal">{x.b}</td></tr>)}
+      </tbody>
+    </table>
+  </div>
+  <p>O nosso <strong>interesse legítimo</strong> é proteger o software contra usos não autorizados, manter o serviço seguro e a funcionar, e corrigir erros depressa. Pode opor-se a estes tratamentos (ver <a href="#direitos">Os seus direitos</a>).</p>
+  <p>Os dados de validação são necessários para o Programa funcionar: sem eles, não é possível validar a licença.</p>
+  <p>A validação da licença é automática: o servidor confirma se o computador corresponde ao que está associado à licença. Se uma licença for bloqueada e discordar, contacte-nos e a situação será analisada por uma pessoa.</p>
+  <p>Não usamos os dados para publicidade nem para criar perfis.</p>
+
+  <h2 id="conservacao">Durante quanto tempo</h2>
+  <dl class="kv">
+    {conservacao.map(x => <Fragment><dt>{x.d}</dt><dd>{x.p}</dd></Fragment>)}
+  </dl>
+
+  <h2 id="partilha">Com quem partilhamos</h2>
+  <p>Não vendemos dados pessoais nem os partilhamos com terceiros para fins de marketing. Recorremos apenas a prestadores de serviços, que tratam os dados na medida necessária para prestarem esses serviços:</p>
+  <ul>
+    <li><strong>Servidor de licenças</strong>: alojado em Portugal;</li>
+    <li><strong>Cloudflare</strong>: rede e segurança no acesso ao servidor e encaminhamento do email do domínio; trata dados técnicos da ligação, como o endereço IP;</li>
+    <li><strong>Serviço de email</strong>: para recebermos e respondermos às suas mensagens;</li>
+    <li><strong>GitHub</strong>: alojamento deste site;</li>
+    <li><strong>Google Fonts</strong>: tipos de letra deste site.</li>
+  </ul>
+  <p>Podemos ainda comunicar dados às autoridades, quando a lei o exigir.</p>
+
+  <h2 id="transferencias">Transferências para fora do EEE</h2>
+  <p>O servidor de licenças está em Portugal. Alguns prestadores, como a Cloudflare, o GitHub e a Google, podem tratar dados fora do Espaço Económico Europeu, nomeadamente nos Estados Unidos. Nesses casos, as transferências fazem-se com as garantias previstas no RGPD, como o Quadro de Privacidade de Dados UE-EUA ou as cláusulas contratuais-tipo aprovadas pela Comissão Europeia.</p>
+
+  <h2 id="direitos">Os seus direitos</h2>
+  <ul class="rights">
+    {direitos.map(x => <li><strong>{x.t}</strong>{x.d}</li>)}
+  </ul>
+  <p>Para exercer qualquer um destes direitos, envie um email para <a href={`mailto:${suporte}`}>{suporte}</a>. Respondemos no prazo de um mês, que pode ser prolongado nos casos previstos no RGPD. Poderemos pedir-lhe que confirme a sua identidade.</p>
+  <p>Apagar os dados de validação, ou opor-se ao seu tratamento, pode impedir que a licença funcione.</p>
+  <p>Tem também o direito de apresentar reclamação à Comissão Nacional de Proteção de Dados (CNPD), em <a href="https://www.cnpd.pt" rel="noopener">www.cnpd.pt</a>.</p>
+
+  <h2 id="seguranca">Segurança</h2>
+  <p>Os dados circulam sempre por ligação cifrada (HTTPS) e são protegidos com medidas técnicas e organizativas contra acesso, perda ou alteração não autorizados.</p>
+  <p>Enviamos apenas o necessário: caminhos, nomes de ficheiros e nomes dos móveis são substituídos antes de saírem do seu computador, e o conteúdo dos ficheiros nunca é enviado.</p>
+
+  <h2 id="cookies">Cookies</h2>
+  <p>Este site não usa cookies nem ferramentas de estatísticas, publicidade ou rastreio. Por isso, não lhe pedimos consentimento para cookies.</p>
+
+  <h2 id="alteracoes">Alterações a esta política</h2>
+  <p>Podemos atualizar esta política, por exemplo se o Programa passar a tratar dados novos. A versão em vigor e a respetiva data estão sempre indicadas no topo desta página. Se as alterações forem relevantes, avisamos os Clientes por email ou no Programa antes de entrarem em vigor.</p>
+</Legal>

@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { empresa } from "../data/empresa";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const email = "geral@solidlynx-automation.com";
+const email = empresa.emailGeral;
 const services = [
   { t: "Tarefas CAD repetitivas", d: "Desenhos, listas e exportações geradas sozinhas." },
   { t: "Desenho paramétrico", d: "Variantes a partir de parâmetros, sem redesenhar." },

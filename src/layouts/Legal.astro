@@ -1,0 +1,130 @@
+---
+// Layout das páginas legais. As secções são os <h2 id="..."> da página:
+// são numeradas automaticamente e formam o índice lateral.
+import Layout from "./Layout.astro";
+import { empresa, documentos, identificacao, emFalta } from "../data/empresa";
+
+interface Props {
+  doc: keyof typeof documentos;
+  title: string;
+  description: string;
+  titulo: string;
+  destaque: string;
+}
+const { doc, title, description, titulo, destaque } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const { versao, vigor } = documentos[doc];
+const data = new Intl.DateTimeFormat("pt-PT", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(vigor));
+
+if (emFalta.length) console.warn(`[legal] /${doc}: falta preencher ${emFalta.join(", ")} em src/data/empresa.ts`);
+
+const toc: { id: string; n: string; t: string }[] = [];
+const corpo = (await Astro.slots.render("default")).replace(
+  /<h2([^>]*?)\sid="([^"]+)"([^>]*)>([\s\S]*?)<\/h2>/g,
+  (_, antes, id, depois, texto) => {
+    const n = String(toc.length + 1).padStart(2, "0");
+    toc.push({ id, n, t: texto.replace(/<[^>]+>/g, "").trim() });
+    return `<h2${antes} id="${id}"${depois}><span class="n">${n}</span><span>${texto}</span></h2>`;
+  },
+);
+
+const docs = [
+  { key: "termos", href: `${base}/termos`, t: "Termos" },
+  { key: "privacidade", href: `${base}/privacidade`, t: "Privacidade" },
+];
+---
+<Layout title={title} description={description}>
+  <nav>
+    <div class="wrap">
+      <a class="logo" href={`${base}/`}><img src={`${base}/logo.png`} alt="SolidLynx" height="40" /></a>
+      <ul>
+        <li><a href={`${base}/#servicos`}>Serviços</a></li>
+        <li><a href={`${base}/#como`}>Como funciona</a></li>
+        <li><a href={`${base}/#preco`}>Preço</a></li>
+        <li><a href={`${base}/#contacto`}>Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="doc">
+    <div class="wrap">
+      <header class="doc-head">
+        <span class="pill glass">Informação legal</span>
+        <h1>{titulo} <span class="grad">{destaque}</span></h1>
+        <p class="doc-meta">
+          <span>Versão {versao}</span>
+          <span>Em vigor desde <time datetime={vigor}>{data}</time></span>
+          <span><button class="doc-print" type="button">Imprimir ou guardar em PDF</button></span>
+        </p>
+        <div class="doc-tabs glass" role="navigation" aria-label="Documentos legais">
+          {docs.map(d => <a href={d.href} aria-current={d.key === doc ? "page" : undefined}>{d.t}</a>)}
+        </div>
+      </header>
+
+      <div class="doc-grid">
+        <details class="toc">
+          <summary>Nesta página <span class="toc-count">{toc.length} secções</span></summary>
+          <ol>
+            {toc.map(s => <li><a href={`#${s.id}`}><span>{s.n}</span>{s.t}</a></li>)}
+          </ol>
+        </details>
+
+        <article class="doc-body">
+          {Astro.slots.has("resumo") && (
+            <aside class="summary card glass" aria-label="Resumo">
+              <p class="summary-title">Em resumo</p>
+              <ul class="checks"><slot name="resumo" /></ul>
+              <p class="summary-note">Este resumo ajuda a ler o documento, mas não substitui o texto completo.</p>
+            </aside>
+          )}
+
+          <Fragment set:html={corpo} />
+
+          <div class="doc-contact card glass">
+            <div>
+              <h3>Dúvidas sobre este documento?</h3>
+              <p>Escreva-nos: responde-lhe quem desenvolve o SolidLynx.</p>
+              {(empresa.nif || empresa.morada) && <p class="who">{identificacao}</p>}
+            </div>
+            <a class="btn primary" href={`mailto:${empresa.emailSuporte}`}>{empresa.emailSuporte}</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© {new Date().getFullYear()} SolidLynx · <a href={`${base}/termos`}>Termos</a> · <a href={`${base}/privacidade`}>Privacidade</a></span>
+      <span>Foca-te no que interessa</span>
+    </div>
+  </footer>
+</Layout>
+
+<script>
+  // Índice: sempre aberto ao lado do texto em ecrãs largos; recolhível em telemóvel.
+  const toc = document.querySelector<HTMLDetailsElement>(".toc");
+  const largo = matchMedia("(min-width: 901px)");
+  const ajusta = () => { if (toc) toc.open = largo.matches; };
+  ajusta();
+  largo.addEventListener("change", ajusta);
+  toc?.querySelector("summary")?.addEventListener("click", e => { if (largo.matches) e.preventDefault(); });
+  toc?.querySelectorAll("ol a").forEach(a => a.addEventListener("click", () => { if (!largo.matches) toc.open = false; }));
+
+  // Marca no índice a secção que está a ser lida.
+  const pares = [...document.querySelectorAll<HTMLAnchorElement>(".toc ol a")]
+    .map(a => ({ a, h: document.getElementById(decodeURIComponent(a.hash.slice(1))) }))
+    .filter((p): p is { a: HTMLAnchorElement; h: HTMLElement } => !!p.h);
+  let pendente = false;
+  const espia = () => {
+    pendente = false;
+    let atual = 0;
+    pares.forEach((p, i) => { if (p.h.getBoundingClientRect().top < innerHeight * 0.3) atual = i; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) atual = pares.length - 1;
+    pares.forEach((p, i) => p.a.classList.toggle("on", i === atual));
+  };
+  addEventListener("scroll", () => { if (!pendente) { pendente = true; requestAnimationFrame(espia); } }, { passive: true });
+  espia();
+
+  document.querySelector(".doc-print")?.addEventListener("click", () => print());
+</script>
