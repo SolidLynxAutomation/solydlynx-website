@@ -6,9 +6,9 @@ import HeroDrawing from "../components/HeroDrawing.astro";
 import { empresa } from "../data/empresa";
 const email = empresa.emailGeral;
 const services = [
-  { t: "Automação no AlphaCAM", d: "O trabalho que hoje fazes móvel a móvel passa a correr sozinho, para todos de uma vez e à maneira da tua empresa.", k: ["AlphaCAM", "Em lote", "Sem cliques"] },
-  { t: "Do AlphaCAM ao bSuite", d: "A passagem para o bSuite também é automática: nada de abrir e guardar ficheiro a ficheiro.", k: ["bSuite", "Automático", "Em lote"] },
-  { t: "Processos e tarefas repetitivas", d: "Noutro programa ou entre programas: se um passo se repete todos os dias, automatizamo-lo à tua medida.", k: ["À medida", "Outros programas", "Menos erros"] },
+  { t: "Automação no AlphaCAM", d: "O trabalho que hoje fazes móvel a móvel passa a correr sozinho, para todos de uma vez e à maneira da tua empresa." },
+  { t: "Do AlphaCAM ao bSuite", d: "A passagem para o bSuite também é automática: nada de abrir e guardar ficheiro a ficheiro." },
+  { t: "Processos e tarefas repetitivas", d: "Noutro programa ou entre programas: se um passo se repete todos os dias, automatizamo-lo à tua medida." },
 ];
 const perks = [
   { t: "Só refaz o que mudou", d: "Corres outra vez e só são processados os móveis novos ou alterados." },
@@ -63,7 +63,6 @@ const spec = [
               <h3>{s.t}</h3>
               <div class="svc-body">
                 <p>{s.d}</p>
-                <ul class="tags">{s.k.map(k => <li>{k}</li>)}</ul>
               </div>
             </li>
           ))}
