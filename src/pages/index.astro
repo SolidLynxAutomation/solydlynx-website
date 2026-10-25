@@ -6,9 +6,14 @@ import HeroDrawing from "../components/HeroDrawing.astro";
 import { empresa } from "../data/empresa";
 const email = empresa.emailGeral;
 const services = [
-  { t: "Tarefas CAD repetitivas", d: "Desenhos, listas e exportações geradas sozinhas, sem repetir os mesmos cliques todos os dias.", k: ["Desenhos", "Listas", "Exportações"] },
-  { t: "Desenho paramétrico", d: "Defines os parâmetros uma vez e as variantes saem sem redesenhar.", k: ["Parâmetros", "Variantes", "Regras"] },
-  { t: "Processos industriais", d: "Do CAD ao ERP e à máquina, sem copiar dados à mão.", k: ["CAD", "ERP", "Máquina"] },
+  { t: "Automação no AlphaCAM", d: "Do modelo 3D do móvel aos programas CNC: as peças são separadas e maquinadas com as configurações da tua empresa, para todos os móveis de uma vez.", k: ["Modelo 3D", "Peças", "Programas CNC"] },
+  { t: "Do AlphaCAM ao bSuite", d: "Os programas CNC seguem para o bSuite e ficam guardados em bSolid, sem abrir ficheiro a ficheiro.", k: [".cix", "bSuite", "bSolid"] },
+  { t: "Processos e tarefas repetitivas", d: "Noutro programa ou entre programas: se um passo se repete todos os dias, automatizamo-lo à tua medida.", k: ["À medida", "Outros programas", "Menos erros"] },
+];
+const perks = [
+  { t: "Só refaz o que mudou", d: "Corres outra vez e só são processados os móveis novos ou alterados." },
+  { t: "Sem janelas a interromper", d: "Os avisos que já conhecemos são respondidos sozinhos, sem ninguém ao lado." },
+  { t: "Os erros chegam-nos sozinhos", d: "Cada trabalho envia-nos um resumo técnico, nunca os teus ficheiros. Corrigimos sem teres de avisar." },
 ];
 const steps = [
   { t: "Fala-nos do processo", d: "Contas-nos o que se repete." },
@@ -24,17 +29,17 @@ const spec = [
   { k: "Contacto", v: "Direto, com quem desenvolve" },
 ];
 ---
-<Layout title="SolidLynx · Foca-te no que interessa" description="Automatizamos tarefas repetitivas em software CAD, em formato SaaS.">
+<Layout title="SolidLynx · Foca-te no que interessa" description="Automatizamos processos e tarefas repetitivas em CAD/CAM, no AlphaCAM e no bSuite: do modelo 3D aos programas CNC, em formato SaaS.">
   <Header />
 
   <main>
     <section class="hero">
       <div class="wrap">
-        <p class="hero-meta label"><span>Automação CAD</span><span>SaaS</span><span>Desenvolvimento contínuo</span></p>
+        <p class="hero-meta label"><span>Automação CAD/CAM</span><span>AlphaCAM · bSuite</span><span>SaaS</span></p>
         <h1>Foca-te no que<br />interessa<span class="dot">.</span></h1>
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="lead">Automatizamos tarefas repetitivas em software CAD, em formato SaaS: desenvolvimento e correções contínuas, com adaptação rápida a mudanças no teu ambiente de trabalho.</p>
+            <p class="lead">Automatizamos processos e tarefas repetitivas em CAD/CAM, a começar pelo AlphaCAM: do modelo 3D aos programas CNC, sem repetir cliques. Em formato SaaS, com desenvolvimento e correções contínuas.</p>
             <div class="cta">
               <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
               <a class="link" href="#como">Como funciona</a>
@@ -63,6 +68,13 @@ const spec = [
             </li>
           ))}
         </ol>
+        <div class="perks">
+          <p class="sec-label">Em cada trabalho</p>
+          <ul>
+            {perks.map(p => <li><h3>{p.t}</h3><p>{p.d}</p></li>)}
+          </ul>
+        </div>
+        <p class="tm-note">AlphaCAM e bSuite são marcas dos respetivos titulares. A SolidLynx não é afiliada aos seus fabricantes.</p>
       </div>
     </section>
 
