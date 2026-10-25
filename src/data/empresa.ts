@@ -16,7 +16,7 @@ export const empresa = {
 
 // Sempre que o texto de um documento mudar, suba a versão e a data (AAAA-MM-DD).
 export const documentos = {
-  termos: { versao: "1.0", vigor: "2026-10-24" },
+  termos: { versao: "1.1", vigor: "2026-10-25" },
   privacidade: { versao: "1.0", vigor: "2026-10-24" },
 };
 

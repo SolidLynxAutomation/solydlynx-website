@@ -5,10 +5,10 @@ import Footer from "../components/Footer.astro";
 import HeroDrawing from "../components/HeroDrawing.astro";
 import { empresa } from "../data/empresa";
 const email = empresa.emailGeral;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const services = [
-  { t: "Automação no AlphaCAM", d: "O trabalho que hoje fazes móvel a móvel passa a correr sozinho, para todos de uma vez e à maneira da tua empresa." },
-  { t: "Do AlphaCAM ao bSuite", d: "A passagem para o bSuite também é automática: nada de abrir e guardar ficheiro a ficheiro." },
-  { t: "Processos e tarefas repetitivas", d: "Noutro programa ou entre programas: se um passo se repete todos os dias, automatizamo-lo à tua medida." },
+  { t: "Automação ponta\u00a0a\u00a0ponta", d: "No AlphaCAM, no bSuite e noutros programas: o que hoje se faz à mão, ficheiro a ficheiro, passa a correr sozinho do início ao fim." },
+  { t: "Tarefas repetitivas", d: "Se um passo se repete todos os dias, automatizamo-lo à tua medida." },
   { t: "Consultoria no mobiliário", d: "Desenvolvemos sistemas e métodos de trabalho para empresas de mobiliário, do gabinete técnico ao chão de fábrica." },
 ];
 const perks = [
@@ -29,17 +29,17 @@ const spec = [
   { k: "Contacto", v: "Direto, com quem desenvolve" },
 ];
 ---
-<Layout title="SolidLynx · Foca-te no que interessa" description="Automatizamos processos e tarefas repetitivas em CAD/CAM, no AlphaCAM e no bSuite. Consultoria em sistemas e métodos de trabalho para o mobiliário.">
+<Layout title="SolidLynx · Foca-te no que interessa" description="Automação ponta a ponta no AlphaCAM, no bSuite e noutros programas. Consultoria em sistemas e métodos de trabalho para o mobiliário.">
   <Header />
 
   <main>
     <section class="hero">
       <div class="wrap">
-        <p class="hero-meta label"><span>Automação CAD/CAM</span><span>AlphaCAM · bSuite</span><span>Consultoria</span></p>
+        <p class="hero-meta label"><span>Automação ponta a ponta</span><span>AlphaCAM · bSuite</span><span>Consultoria</span></p>
         <h1>Foca-te no que<br />interessa<span class="dot">.</span></h1>
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="lead">Automatizamos processos e tarefas repetitivas em CAD/CAM, a começar pelo AlphaCAM e pelo bSuite. E fazemos consultoria em sistemas e métodos de trabalho para o mobiliário, do gabinete técnico ao chão de fábrica.</p>
+            <p class="lead">Automação ponta&nbsp;a&nbsp;ponta no AlphaCAM, no bSuite e noutros programas. E consultoria em sistemas e métodos de trabalho para o mobiliário, do gabinete técnico ao chão de fábrica.</p>
             <div class="cta">
               <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
               <a class="link" href="#como">Como funciona</a>
@@ -73,7 +73,7 @@ const spec = [
             {perks.map(p => <li><h3>{p.t}</h3><p>{p.d}</p></li>)}
           </ul>
         </div>
-        <p class="tm-note">AlphaCAM e bSuite são marcas dos respetivos titulares. A SolidLynx não é afiliada aos seus fabricantes.</p>
+        <p class="tm-note">AlphaCAM, bSuite e os restantes programas mencionados são marcas dos respetivos titulares. A SolidLynx é independente e não tem qualquer afiliação com os seus fabricantes. <a href={`${base}/termos#terceiros`}>Saber mais</a></p>
       </div>
     </section>
 

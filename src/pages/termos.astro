@@ -19,6 +19,7 @@ const foro = empresa.comarca
   <Fragment slot="resumo">
     <li>A licença é por subscrição e fica associada a um computador.</li>
     <li>Os seus ficheiros e desenhos são seus; o software é da SolidLynx.</li>
+    <li>Somos independentes dos fabricantes dos programas com que trabalhamos (como o AlphaCAM e o bSuite) e não vendemos licenças desses programas.</li>
     <li>O programa liga-se ao nosso servidor para validar a licença e enviar um resumo técnico de cada trabalho, nunca o conteúdo dos seus ficheiros.</li>
     <li>Confirme sempre o que o programa gera antes de o usar em produção.</li>
     <li>Pode cancelar quando quiser, com efeito no fim do período já pago.</li>
@@ -35,10 +36,18 @@ const foro = empresa.comarca
   <p>Se o computador for substituído ou avariar, o Cliente pode pedir a transferência da licença para o novo computador através de <a href={`mailto:${suporte}`}>{suporte}</a>.</p>
   <p>A licença dá apenas o direito de usar o Programa; não transfere para o Cliente a propriedade do software.</p>
 
-  <h2 id="requisitos">Requisitos e software de terceiros</h2>
-  <p>O Programa funciona em Windows e trabalha em conjunto com software de terceiros, como o AlphaCAM e o bSuite. As licenças desse software são da responsabilidade do Cliente e não estão incluídas na subscrição.</p>
-  <p>É necessária ligação à internet para validar a licença. Sem ligação, ou se o servidor de licenças estiver indisponível, o Programa pode não funcionar.</p>
-  <p>AlphaCAM, bSuite, Windows e as restantes marcas mencionadas pertencem aos respetivos titulares. A SolidLynx não é afiliada a esses fabricantes nem controla as alterações que fazem aos seus produtos; quando uma dessas alterações afetar o Programa, faremos o possível por adaptá-lo num prazo razoável.</p>
+  <h2 id="requisitos">Requisitos</h2>
+  <p>O Programa funciona em Windows e precisa de ligação à internet para validar a licença. Sem ligação, ou se o servidor de licenças estiver indisponível, o Programa pode não funcionar.</p>
+  <p>As automações que trabalham com outros programas, como o AlphaCAM ou o bSuite, exigem que esses programas estejam instalados no computador do Cliente, com licenças válidas obtidas pelo próprio Cliente. Essas licenças não estão incluídas na subscrição.</p>
+
+  <h2 id="terceiros">Software de terceiros e marcas</h2>
+  <p class="note">A SolidLynx é independente: não tem qualquer relação com os fabricantes dos programas com que o Programa trabalha.</p>
+  <p><strong>Independência.</strong> A SolidLynx não é afiliada, associada, parceira, revendedora nem representante de nenhum fabricante de software mencionado neste site, no Programa ou na sua documentação, e não é patrocinada, aprovada nem certificada por nenhum deles.</p>
+  <p><strong>Sem distribuição de software nem de licenças.</strong> A SolidLynx não vende, revende, distribui nem sublicencia programas de terceiros, nem fornece as respetivas licenças, chaves de ativação ou atualizações. O Programa não inclui esses programas e não altera, contorna nem desativa as suas licenças ou proteções.</p>
+  <p><strong>Software independente.</strong> O Programa é desenvolvido pela SolidLynx de forma independente. Trabalha sobre as instalações desses programas que o Cliente já tem no seu computador, ao abrigo das licenças do próprio Cliente. O funcionamento desses programas continua a ser da responsabilidade dos respetivos fabricantes.</p>
+  <p><strong>Licenças de terceiros.</strong> A utilização desses programas rege-se pelos contratos que o Cliente celebrou com os respetivos fabricantes ou revendedores. Cabe ao Cliente garantir que esses contratos permitem a utilização que faz deles, incluindo em conjunto com o Programa.</p>
+  <p><strong>Suporte e compatibilidade.</strong> O suporte, a garantia e as atualizações desses programas cabem aos respetivos fabricantes. A SolidLynx não controla as alterações que fazem aos seus produtos: quando uma alteração afetar o Programa, faremos o possível por adaptá-lo num prazo razoável, mas não garantimos a compatibilidade com versões futuras.</p>
+  <p><strong>Marcas.</strong> AlphaCAM, bSuite, Windows e os restantes nomes de produtos ou empresas mencionados são marcas, registadas ou não, dos respetivos titulares. São referidos apenas para indicar com que programas o Programa é compatível, sem que isso signifique qualquer relação, autorização ou recomendação desses titulares.</p>
 
   <h2 id="pagamento">Subscrição, preço e pagamento</h2>
   <p>A licença é contratada por subscrição. O preço depende das funcionalidades contratadas e consta da proposta aceite pelo Cliente.</p>
