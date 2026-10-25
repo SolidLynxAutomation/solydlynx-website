@@ -7,7 +7,7 @@ import { empresa } from "../data/empresa";
 const email = empresa.emailGeral;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const services = [
-  { t: "Automação ponta\u00a0a\u00a0ponta", d: "No AlphaCAM, no bSuite e noutros programas: o que hoje se faz à mão, ficheiro a ficheiro, passa a correr sozinho do início ao fim." },
+  { t: "Automação ponta\u00a0a\u00a0ponta", d: "Integramos o AlphaCAM, o bSuite e outros programas num único fluxo automático, construído à medida das regras e dos métodos da tua empresa." },
   { t: "Tarefas repetitivas", d: "Se um passo se repete todos os dias, automatizamo-lo à tua medida." },
   { t: "Consultoria no mobiliário", d: "Desenvolvemos sistemas e métodos de trabalho para empresas de mobiliário, do gabinete técnico ao chão de fábrica." },
 ];
@@ -22,12 +22,6 @@ const steps = [
   { t: "Desenvolvemos", d: "Entregas curtas e frequentes." },
   { t: "Entregamos", d: "Pronto a usar no dia a dia." },
 ];
-const spec = [
-  { k: "Preço", v: "Por funcionalidade: pagas só o que usas" },
-  { k: "Desenvolvimento", v: "Contínuo, com entregas curtas e frequentes" },
-  { k: "Correções", v: "Incluídas" },
-  { k: "Contacto", v: "Direto, com quem desenvolve" },
-];
 ---
 <Layout title="SolidLynx · Foca-te no que interessa" description="Automação ponta a ponta no AlphaCAM, no bSuite e noutros programas. Consultoria em sistemas e métodos de trabalho para o mobiliário.">
   <Header />
@@ -35,11 +29,11 @@ const spec = [
   <main>
     <section class="hero">
       <div class="wrap">
-        <p class="hero-meta label"><span>Automação ponta a ponta</span><span>AlphaCAM · bSuite</span><span>Consultoria</span></p>
+        <p class="hero-meta label"><span>Automação ponta a ponta</span><span>CAD/CAM</span><span>Consultoria</span></p>
         <h1>Foca-te no que<br />interessa<span class="dot">.</span></h1>
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="lead">Automação ponta&nbsp;a&nbsp;ponta no AlphaCAM, no bSuite e noutros programas. E consultoria em sistemas e métodos de trabalho para o mobiliário, do gabinete técnico ao chão de fábrica.</p>
+            <p class="lead">Automação ponta&nbsp;a&nbsp;ponta nos programas que já usas. E consultoria em sistemas e métodos de trabalho para o mobiliário, do gabinete técnico ao chão de fábrica.</p>
             <div class="cta">
               <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
               <a class="link" href="#como">Como funciona</a>
@@ -99,28 +93,9 @@ const spec = [
       </div>
     </section>
 
-    <section id="preco" class="section">
-      <div class="wrap">
-        <div class="sec-head">
-          <p class="sec-label"><b>03</b>Preço</p>
-          <h2>Simplicidade e eficiência</h2>
-        </div>
-        <div class="price">
-          <div class="price-lead">
-            <p class="price-big">Pagas só o que usas.</p>
-            <p>Cada funcionalidade tem preço próprio. E falas sempre com quem desenvolve.</p>
-            <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
-          </div>
-          <dl class="spec">
-            {spec.map(s => <div><dt>{s.k}</dt><dd>{s.v}</dd></div>)}
-          </dl>
-        </div>
-      </div>
-    </section>
-
     <section id="contacto" class="contact">
       <div class="wrap">
-        <p class="sec-label"><b>04</b>Contacto</p>
+        <p class="sec-label"><b>03</b>Contacto</p>
         <h2>Pronto para te focares no que interessa?</h2>
         <a class="mail" href={`mailto:${email}`}>{email} <span class="arr" aria-hidden="true">→</span></a>
         <p class="contact-note">Conta-nos o que se repete no teu dia a dia. Respondemos com uma proposta.</p>
