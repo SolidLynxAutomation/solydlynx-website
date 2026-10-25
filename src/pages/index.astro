@@ -6,8 +6,8 @@ import HeroDrawing from "../components/HeroDrawing.astro";
 import { empresa } from "../data/empresa";
 const email = empresa.emailGeral;
 const services = [
-  { t: "Automação no AlphaCAM", d: "Do modelo 3D do móvel aos programas CNC: as peças são separadas e maquinadas com as configurações da tua empresa, para todos os móveis de uma vez.", k: ["Modelo 3D", "Peças", "Programas CNC"] },
-  { t: "Do AlphaCAM ao bSuite", d: "Os programas CNC seguem para o bSuite e ficam guardados em bSolid, sem abrir ficheiro a ficheiro.", k: [".cix", "bSuite", "bSolid"] },
+  { t: "Automação no AlphaCAM", d: "O trabalho que hoje fazes móvel a móvel passa a correr sozinho, para todos de uma vez e à maneira da tua empresa.", k: ["AlphaCAM", "Em lote", "Sem cliques"] },
+  { t: "Do AlphaCAM ao bSuite", d: "A passagem para o bSuite também é automática: nada de abrir e guardar ficheiro a ficheiro.", k: ["bSuite", "Automático", "Em lote"] },
   { t: "Processos e tarefas repetitivas", d: "Noutro programa ou entre programas: se um passo se repete todos os dias, automatizamo-lo à tua medida.", k: ["À medida", "Outros programas", "Menos erros"] },
 ];
 const perks = [
@@ -29,7 +29,7 @@ const spec = [
   { k: "Contacto", v: "Direto, com quem desenvolve" },
 ];
 ---
-<Layout title="SolidLynx · Foca-te no que interessa" description="Automatizamos processos e tarefas repetitivas em CAD/CAM, no AlphaCAM e no bSuite: do modelo 3D aos programas CNC, em formato SaaS.">
+<Layout title="SolidLynx · Foca-te no que interessa" description="Automatizamos processos e tarefas repetitivas em CAD/CAM, no AlphaCAM e no bSuite, em formato SaaS.">
   <Header />
 
   <main>
@@ -39,7 +39,7 @@ const spec = [
         <h1>Foca-te no que<br />interessa<span class="dot">.</span></h1>
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="lead">Automatizamos processos e tarefas repetitivas em CAD/CAM, a começar pelo AlphaCAM: do modelo 3D aos programas CNC, sem repetir cliques. Em formato SaaS, com desenvolvimento e correções contínuas.</p>
+            <p class="lead">Automatizamos processos e tarefas repetitivas em CAD/CAM, a começar pelo AlphaCAM e pelo bSuite: o que hoje se faz à mão passa a correr sozinho. Em formato SaaS, com desenvolvimento e correções contínuas.</p>
             <div class="cta">
               <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
               <a class="link" href="#como">Como funciona</a>
