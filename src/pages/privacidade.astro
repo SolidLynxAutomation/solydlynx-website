@@ -7,14 +7,14 @@ const { emailSuporte: suporte } = empresa;
 const finalidades = [
   { f: "Validar a licença e fazer funcionar o serviço", d: "Dados de validação da licença", b: "Execução do contrato" },
   { f: "Prevenir fraude e usos indevidos (ex.: partilha de licenças) e garantir a segurança", d: "Dados de validação da licença", b: "Interesse legítimo" },
-  { f: "Suporte e correção de erros", d: "Resumo técnico de cada trabalho", b: "Execução do contrato e interesse legítimo" },
+  { f: "Suporte e correção de erros", d: "Resumo e registo técnico de cada trabalho", b: "Execução do contrato e interesse legítimo" },
   { f: "Responder a pedidos e gerir a relação com o Cliente", d: "Contactos e mensagens", b: "Diligências pré-contratuais e execução do contrato" },
   { f: "Faturação e obrigações fiscais", d: "Dados de faturação", b: "Cumprimento de obrigação legal" },
   { f: "Mostrar este site", d: "Endereço IP e dados técnicos do navegador", b: "Interesse legítimo" },
 ];
 const conservacao = [
   { d: "Dados de validação da licença", p: "Enquanto a licença estiver ativa e, depois, só pelo tempo necessário ao cumprimento de obrigações legais. Em seguida, são apagados." },
-  { d: "Resumos técnicos de cada trabalho", p: "180 dias. Depois, são apagados." },
+  { d: "Resumos e registos técnicos de cada trabalho", p: "180 dias. Depois, são apagados." },
   { d: "Contactos e mensagens", p: "Enquanto durar a relação com o Cliente e, depois, apenas o necessário para cumprir obrigações legais ou defender direitos." },
   { d: "Dados de faturação", p: "Pelo prazo exigido pela legislação fiscal." },
 ];
@@ -38,7 +38,7 @@ const direitos = [
     <li>Usamos os dados apenas para validar a licença, prevenir usos indevidos e dar suporte.</li>
     <li>O conteúdo dos seus ficheiros de trabalho nunca é enviado.</li>
     <li>Não vendemos dados nem os usamos para publicidade.</li>
-    <li>Os resumos técnicos de cada trabalho são apagados ao fim de 180 dias.</li>
+    <li>Os resumos e registos técnicos de cada trabalho são apagados ao fim de 180 dias.</li>
     <li>Este site não usa cookies nem ferramentas de estatísticas.</li>
   </Fragment>
 
@@ -62,17 +62,18 @@ const direitos = [
     <li>a data e a hora de cada validação.</li>
   </ul>
 
-  <h3>Resumo técnico de cada trabalho</h3>
-  <p>No fim de cada trabalho (cada execução de uma automação), o Programa envia um resumo técnico, para podermos resolver problemas sem ser preciso o Cliente reportá-los.</p>
+  <h3>Resumo e registo técnico de cada trabalho</h3>
+  <p>No fim de cada trabalho (cada execução de uma automação), o Programa envia um resumo técnico e o registo técnico da execução, para podermos resolver problemas sem ser preciso o Cliente reportá-los. O registo deixou de ficar guardado no computador do Cliente.</p>
   <div class="split">
     <div class="yes">
       <p class="split-title">O que é enviado</p>
       <ul class="marks">
         <li>quantos móveis foram processados;</li>
-        <li>que etapas correram e a duração do trabalho;</li>
+        <li>que etapas correram e a duração de cada passo e do trabalho;</li>
         <li>os códigos de erro e de aviso;</li>
         <li>a mensagem de erro devolvida pelo AlphaCAM ou pelo bSuite;</li>
-        <li>as janelas (pop-ups) que estes programas mostraram: título, texto e botões.</li>
+        <li>as janelas (pop-ups) que estes programas mostraram: título, texto e botões;</li>
+        <li>o registo técnico da execução: a sequência de passos, os tempos e as mensagens que o Programa foi registando durante o trabalho — a versão detalhada do resumo acima, com a mesma limpeza.</li>
       </ul>
     </div>
     <div class="no">
@@ -82,7 +83,7 @@ const direitos = [
         <li>os caminhos e os nomes dos ficheiros;</li>
         <li>os nomes dos móveis.</li>
       </ul>
-      <p class="split-note">Caminhos, nomes de ficheiros e nomes dos móveis são substituídos antes do envio, mesmo quando aparecem numa mensagem de erro.</p>
+      <p class="split-note">Caminhos, nomes de ficheiros e nomes dos móveis são substituídos antes do envio, tanto no resumo como no registo, mesmo quando aparecem numa mensagem de erro.</p>
     </div>
   </div>
 
