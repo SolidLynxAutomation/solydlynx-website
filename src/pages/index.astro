@@ -1,0 +1,130 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero3D from "../components/Hero3D.astro";
+import { empresa } from "../data/empresa";
+const email = empresa.emailGeral;
+const services = [
+  { t: "Automação ponta\u00a0a\u00a0ponta", d: "Adaptamo-nos aos processos que já tens e automatizamo-los de ponta a ponta, para tirares o máximo partido do que já existe." },
+  { t: "IA e agentes", d: "Juntamos inteligência artificial e agentes à automação, para as tarefas que pedem mais do que regras fixas." },
+  { t: "Tarefas repetitivas", d: "Se um passo se repete todos os dias, automatizamo-lo à tua medida." },
+  { t: "Consultoria no mobiliário", d: "Desenvolvemos sistemas e métodos de trabalho para empresas de mobiliário, do gabinete técnico ao chão de fábrica." },
+];
+const perks = [
+  { t: "Feito para a tua empresa", d: "Construído à medida das tuas regras e dos teus métodos, não o contrário." },
+  { t: "Monitorização contínua", d: "Acompanhamos cada processo. Não esperamos que nos digas o que correu mal: quando dás por isso, já está corrigido." },
+  { t: "Contacto direto", d: "Falas sempre com a equipa que desenvolve, sem intermediários." },
+];
+const steps = [
+  { t: "Fala-nos do processo", d: "Contas-nos o que se repete." },
+  { t: "Otimizamos", d: "Desenhamos o processo mais simples." },
+  { t: "Desenvolvemos", d: "Entregas curtas e frequentes." },
+  { t: "Entregamos", d: "Pronto a usar no dia a dia." },
+];
+const titulo = "SolidLynx · Automação de processos, IA e consultoria";
+const descricao = "Automação de processos de ponta a ponta, com IA e agentes, e consultoria em sistemas e métodos de trabalho para o mobiliário.";
+const site = (Astro.site ?? new URL("https://solidlynx.pt")).origin;
+const schema = [
+  {
+    "@type": "WebPage",
+    "@id": `${site}/#pagina`,
+    url: `${site}/`,
+    name: titulo,
+    description: descricao,
+    inLanguage: "pt-PT",
+    isPartOf: { "@id": `${site}/#site` },
+    about: { "@id": `${site}/#organizacao` },
+    primaryImageOfPage: `${site}/og.png`,
+  },
+  ...services.map((s, i) => ({
+    "@type": "Service",
+    "@id": `${site}/#servico-${i + 1}`,
+    name: s.t.replace(/\u00a0/g, " "),
+    description: s.d,
+    provider: { "@id": `${site}/#organizacao` },
+    areaServed: { "@type": "Country", name: "Portugal" },
+  })),
+];
+---
+<Layout title={titulo} description={descricao} schema={schema}>
+  <Header />
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="hero-meta label"><span>Automação ponta a ponta</span><span>CAD/CAM</span><span>IA e agentes</span><span>Consultoria</span></p>
+        <h1>Foca-te no que<br />interessa<span class="dot">.</span></h1>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="lead">Nós tratamos do resto. Automatizamos processos de ponta&nbsp;a&nbsp;ponta. No mobiliário, criamos também sistemas e métodos de trabalho, do gabinete técnico ao chão de fábrica.</p>
+            <div class="cta">
+              <a class="btn" href="#contacto">Pedir proposta <span class="arr" aria-hidden="true">→</span></a>
+              <a class="link" href="#como">Como funciona</a>
+            </div>
+          </div>
+          <figure class="hero-fig"><Hero3D /></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-label"><b>01</b>Serviços</p>
+          <h2>O que fazemos</h2>
+        </div>
+        <ol class="svc">
+          {services.map((s, i) => (
+            <li>
+              <span class="svc-n">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{s.t}</h3>
+              <div class="svc-body">
+                <p>{s.d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="perks">
+          <p class="sec-label">Em todos os projetos</p>
+          <ul>
+            {perks.map(p => <li><h3>{p.t}</h3><p>{p.d}</p></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="como" class="section sheet">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-label"><b>02</b>Como funciona</p>
+          <h2>Em 4 passos</h2>
+        </div>
+        <div class="flow-wrap">
+          <ol class="flow">
+            {steps.map((s, i) => (
+              <li>
+                <span class="flow-node" aria-hidden="true"></span>
+                <span class="flow-n">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </li>
+            ))}
+          </ol>
+          <div class="loop" aria-hidden="true"><span>Melhoria contínua</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="contact">
+      <div class="wrap">
+        <p class="sec-label"><b>03</b>Contacto</p>
+        <h2>Pronto para te focares no que interessa?</h2>
+        <a class="mail" href={`mailto:${email}`}>{email} <span class="arr" aria-hidden="true">→</span></a>
+        <p class="contact-note">Conta-nos o que se repete no teu dia a dia. Respondemos com uma proposta.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

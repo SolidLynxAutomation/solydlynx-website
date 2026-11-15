@@ -1,0 +1,109 @@
+---
+// Cada <h2 id="..."> é uma cláusula: a numeração e o índice são gerados sozinhos.
+// Ao alterar o texto, suba a versão e a data em src/data/empresa.ts.
+import Legal from "../layouts/Legal.astro";
+import { empresa, identificacao } from "../data/empresa";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const { emailGeral: geral } = empresa;
+const foro = empresa.comarca
+  ? `é competente o foro da comarca de ${empresa.comarca}, com renúncia expressa a qualquer outro`
+  : "são competentes os tribunais portugueses";
+---
+<Legal
+  doc="termos"
+  title="Termos de Utilização · SolidLynx"
+  description="Condições da licença e da utilização do programa SolidLynx: subscrição, atualizações, suporte e responsabilidades."
+  titulo="Termos de"
+  destaque="Utilização"
+>
+
+  <h2 id="objeto">Objeto e aceitação</h2>
+  <p>Estes Termos de Utilização regulam a licença e a utilização do programa SolidLynx (o «Programa») e dos serviços associados (validação da licença, atualizações e suporte), fornecidos por <strong>{identificacao}</strong> («SolidLynx» ou «nós»).</p>
+  <p>Ao instalar, ativar ou usar o Programa, a pessoa ou empresa que contrata a licença (o «Cliente») declara que leu e aceita estes termos. Quem os aceita em nome de uma empresa declara ter poderes para a vincular.</p>
+  <p>O Programa destina-se a uso profissional. Se existir uma proposta ou um contrato escrito com o Cliente, prevalece o que aí estiver previsto naquilo em que for diferente destes termos.</p>
+
+  <h2 id="licenca">Licença</h2>
+  <p>A SolidLynx concede ao Cliente uma licença de utilização do Programa <strong>não exclusiva, pessoal e intransmissível</strong>, válida enquanto a subscrição estiver ativa.</p>
+  <p>A licença é atribuída <strong>por máquina</strong>: fica associada ao primeiro computador onde é ativada e só pode ser usada nesse computador. Cada computador adicional precisa da sua própria licença.</p>
+  <p>Se o computador for substituído ou avariar, o Cliente pode pedir a transferência da licença para o novo computador através de <a href={`mailto:${geral}`}>{geral}</a>.</p>
+  <p>A licença dá apenas o direito de usar o Programa; não transfere para o Cliente a propriedade do software.</p>
+
+  <h2 id="requisitos">Requisitos</h2>
+  <p>O Programa funciona nos sistemas operativos indicados na proposta e precisa de ligação à internet para validar a licença. Sem ligação, ou se o servidor de licenças estiver indisponível, o Programa pode não funcionar.</p>
+  <p>Algumas funcionalidades podem exigir software de terceiros, licenciado pelo próprio Cliente. Essas licenças não estão incluídas na subscrição.</p>
+
+  <h2 id="terceiros">Software de terceiros e marcas</h2>
+  <p class="note">A SolidLynx é independente: não tem qualquer relação com os fabricantes dos programas com que o Programa trabalha.</p>
+  <p><strong>Independência.</strong> A SolidLynx não é afiliada, associada, parceira, revendedora nem representante de nenhum fabricante de software mencionado neste site, no Programa ou na sua documentação, e não é patrocinada, aprovada nem certificada por nenhum deles.</p>
+  <p><strong>Sem distribuição de software nem de licenças.</strong> A SolidLynx não vende, revende, distribui nem sublicencia programas de terceiros, nem fornece as respetivas licenças, chaves de ativação ou atualizações. O Programa não inclui esses programas e não altera, contorna nem desativa as suas licenças ou proteções.</p>
+  <p><strong>Software independente.</strong> O Programa é desenvolvido pela SolidLynx de forma independente. Quando é usado em conjunto com software de terceiros, fá-lo ao abrigo das licenças do próprio Cliente, e o funcionamento desse software continua a ser da responsabilidade dos respetivos fabricantes.</p>
+  <p><strong>Licenças de terceiros.</strong> A utilização desses programas rege-se pelos contratos que o Cliente celebrou com os respetivos fabricantes ou revendedores. Cabe ao Cliente garantir que esses contratos permitem a utilização que faz deles, incluindo em conjunto com o Programa.</p>
+  <p><strong>Suporte e compatibilidade.</strong> O suporte, a garantia e as atualizações desses programas cabem aos respetivos fabricantes. A SolidLynx não controla as alterações que fazem aos seus produtos: quando uma alteração afetar o Programa, faremos o possível por adaptá-lo num prazo razoável, mas não garantimos a compatibilidade com versões futuras.</p>
+  <p><strong>Marcas.</strong> Os nomes de programas, produtos ou empresas de terceiros que possam ser referidos neste site, no Programa, na sua documentação ou em propostas são marcas, registadas ou não, dos respetivos titulares. Qualquer referência serve apenas para indicar compatibilidade e não significa qualquer relação, autorização ou recomendação desses titulares.</p>
+
+  <h2 id="pagamento">Subscrição, preço e pagamento</h2>
+  <p>A licença é contratada por subscrição. O preço depende das funcionalidades contratadas e consta da proposta aceite pelo Cliente.</p>
+  <p>Os pagamentos são feitos nos prazos e com a periodicidade indicados na proposta ou na fatura. Aos preços acresce IVA à taxa legal em vigor, quando aplicável.</p>
+  <p>Podemos alterar os preços para períodos futuros, avisando o Cliente com pelo menos 30 dias de antecedência. Se não concordar, o Cliente pode cancelar a subscrição antes de o novo preço se aplicar.</p>
+
+  <h2 id="atualizacoes">Atualizações e suporte</h2>
+  <p>O Programa verifica, ao abrir, se há uma versão nova e propõe instalá-la. Os ficheiros do Cliente, as definições e a licença mantêm-se. Algumas atualizações podem ser necessárias para continuar a usar o serviço.</p>
+  <p>As correções e melhorias das funcionalidades contratadas estão incluídas na subscrição. Funcionalidades novas podem ter preço próprio, que é sempre indicado antes de serem ativadas.</p>
+  <p>O suporte é prestado por email, através de <a href={`mailto:${geral}`}>{geral}</a>. Os dados técnicos enviados pelo Programa (ver a <a href={`${base}/privacidade/#dados`}>Política de Privacidade</a>) permitem-nos detetar e corrigir erros sem que o Cliente tenha de os reportar. Só se aplicam prazos de resposta garantidos quando estiverem previstos na proposta.</p>
+  <p>Fazemos o possível por manter o servidor de licenças sempre disponível, mas podem ocorrer interrupções para manutenção ou por causas fora do nosso controlo.</p>
+
+  <h2 id="restricoes">Utilizações não permitidas</h2>
+  <p>Salvo autorização escrita da SolidLynx, o Cliente não pode:</p>
+  <ul>
+    <li>descompilar, desmontar ou fazer engenharia inversa do Programa, exceto nos casos em que a lei o permita expressamente;</li>
+    <li>remover, desativar ou contornar a verificação de licença;</li>
+    <li>simular, falsificar ou interferir com o servidor de licenças;</li>
+    <li>extrair ou reutilizar o conteúdo interno do Programa;</li>
+    <li>modificar, copiar, distribuir, sublicenciar, alugar ou ceder o Programa a terceiros;</li>
+    <li>usar a mesma licença em mais do que um computador.</li>
+  </ul>
+
+  <h2 id="propriedade">Propriedade intelectual</h2>
+  <p>O Programa, incluindo a sua lógica interna, as atualizações e os desenvolvimentos feitos a pedido do Cliente, é propriedade da SolidLynx, salvo acordo escrito em contrário.</p>
+  <p>Os ficheiros, desenhos, projetos e dados do Cliente <strong>continuam a ser do Cliente</strong>. A SolidLynx não adquire qualquer direito sobre eles.</p>
+
+  <h2 id="dados">Dados e monitorização</h2>
+  <p>Para validar a licença, prevenir usos indevidos e prestar suporte, o Programa comunica com o servidor da SolidLynx e envia dados técnicos do computador e da sua utilização. A SolidLynx recolhe também dados de utilização do Programa, que usa para prestar suporte e melhorar o produto.</p>
+  <p>O tratamento destes dados está descrito na <a href={`${base}/privacidade/`}>Política de Privacidade</a>, que faz parte integrante destes termos.</p>
+
+  <h2 id="cliente">Responsabilidades do Cliente</h2>
+  <p class="note">O Programa automatiza tarefas, mas não substitui a validação técnica de quem o usa.</p>
+  <p>O Cliente é responsável por:</p>
+  <ul>
+    <li>verificar os resultados produzidos pelo Programa antes de os usar em produção;</li>
+    <li>manter cópias de segurança dos seus ficheiros;</li>
+    <li>usar o Programa de acordo com estes termos e com a lei;</li>
+    <li>manter atualizados os seus dados de contacto e de faturação.</li>
+  </ul>
+
+  <h2 id="responsabilidade">Garantia e limitação de responsabilidade</h2>
+  <p>O Programa é fornecido «tal como está». Corrigimos os erros que detetarmos ou que nos forem reportados, mas não garantimos que funcione sem erros ou sem interrupções.</p>
+  <p>Na medida permitida por lei, a SolidLynx não responde por lucros cessantes, perdas de produção, material desperdiçado, perda de dados ou outros danos indiretos resultantes do uso do Programa.</p>
+  <p>Em qualquer caso, a responsabilidade total da SolidLynx fica limitada ao valor pago pelo Cliente nos 12 meses anteriores ao facto que lhe deu origem.</p>
+  <p>Estas limitações não se aplicam em caso de dolo ou culpa grave, nem nas demais situações em que a lei não permita limitar a responsabilidade.</p>
+
+  <h2 id="cessacao">Duração, suspensão e cessação</h2>
+  <p>A subscrição vigora pelo período indicado na proposta e renova-se automaticamente por períodos iguais, salvo cancelamento.</p>
+  <p>O Cliente pode cancelar a subscrição a qualquer momento, por email para <a href={`mailto:${geral}`}>{geral}</a>. O cancelamento produz efeitos no fim do período já pago.</p>
+  <p>A falta de pagamento ou a violação destes termos permite à SolidLynx suspender ou revogar a licença. Sempre que possível, avisaremos antes e daremos um prazo razoável para regularizar a situação.</p>
+  <p>Quando a licença termina, o Programa deixa de funcionar. Os ficheiros que o Cliente produziu com ele continuam a ser seus e podem continuar a ser usados.</p>
+
+  <h2 id="alteracoes">Alterações a estes termos</h2>
+  <p>Podemos atualizar estes termos, por exemplo quando surgirem funcionalidades novas ou mudanças na lei. As alterações relevantes são comunicadas aos Clientes por email ou no Programa, com pelo menos 30 dias de antecedência.</p>
+  <p>Se o Cliente continuar a usar o Programa depois dessa data, considera-se que aceita a nova versão. Se não concordar, pode cancelar a subscrição antes de as alterações entrarem em vigor. A versão em vigor e a respetiva data estão sempre indicadas no topo desta página.</p>
+
+  <h2 id="lei">Lei aplicável e litígios</h2>
+  <p>Estes termos regem-se pela lei portuguesa. As partes procurarão resolver qualquer litígio de forma amigável; não sendo possível, {foro}.</p>
+
+  <h2 id="finais">Disposições finais</h2>
+  <ul>
+    <li>Se alguma cláusula for considerada inválida, as restantes mantêm-se em vigor.</li>
+    <li>O facto de a SolidLynx não exigir, num dado momento, o cumprimento de uma cláusula não significa que renuncie a ela.</li>
+    <li>As comunicações são feitas por email, para os endereços indicados nesta página e para o endereço indicado pelo Cliente.</li>
+  </ul>
+</Legal>

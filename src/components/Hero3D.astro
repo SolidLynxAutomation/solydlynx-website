@@ -1,0 +1,167 @@
+---
+// Animação do topo: do desenho 3D de um móvel à peça maquinada (cena WebGL em src/scripts/maquina3d.ts).
+// O desenho SVG estático só aparece em navegadores sem WebGL (ou sem JavaScript).
+
+const W = 720, H = 480;
+// Peça em mm: comprimento (x), largura (y), espessura (z).
+const L = 700, P = 400, T = 25;
+const K = 0.5, C = Math.cos(Math.PI / 6), S = 0.5;
+const OX = 300, OY = 150;
+const iso = (x: number, y: number, z = 0) => [OX + (x - y) * C * K, OY + (x + y) * S * K - z * K];
+const pt = (x: number, y: number, z = 0) => iso(x, y, z).map(n => n.toFixed(1)).join(",");
+const poly = (pts: number[][]) => pts.map(([x, y, z]) => pt(x, y, z)).join(" ");
+const circ = (f: (a: number) => number[], n = 36) =>
+  "M" + Array.from({ length: n }, (_, i) => pt(...(f((i / n) * 2 * Math.PI) as [number, number, number]))).join(" L") + " Z";
+
+// Operações (mm)
+const furos = [
+  ...[37, P - 37].flatMap(y => [254, 286, 318, 350, 382, 414, 446].map(x => ({ x, y, r: 3 }))),
+  ...[100, 132, L - 132, L - 100].map(x => ({ x, y: P - 37, r: 3 })),
+];
+const topo = [60, 200, 340];
+const rasgo = { y: 20, w: 8 };
+const caminho = (pts: number[][], z: number) => "M" + pts.map(([x, y]) => pt(x, y, z)).join(" L") + " Z";
+
+// Etapas do processo (painel sobre a animação 3D)
+const fases = ["Desenho 3D", "Automação", "Programa", "Importação", "Maquinação"];
+---
+<div class="m3d">
+  <svg class="drawing iso" viewBox={`0 0 ${W} ${H}`} role="img"
+    aria-label="Do desenho 3D à peça maquinada: a partir do desenho de uma lateral, o programa é gerado automaticamente, importado na máquina e a peça é maquinada.">
+    <rect class="d-frame" x="8.5" y="8.5" width={W - 17} height={H - 17} />
+    <rect class="d-frame" x="24.5" y="24.5" width={W - 49} height={H - 49} />
+    <polygon class="f-top" points={poly([[0, 0, T], [L, 0, T], [L, P, T], [0, P, T]])} />
+    <polygon class="f-front" points={poly([[0, P, T], [L, P, T], [L, P, 0], [0, P, 0]])} />
+    <polygon class="f-side" points={poly([[L, 0, T], [L, P, T], [L, P, 0], [L, 0, 0]])} />
+    <path class="cut" d={caminho([[0, rasgo.y - rasgo.w / 2], [L, rasgo.y - rasgo.w / 2], [L, rasgo.y + rasgo.w / 2], [0, rasgo.y + rasgo.w / 2]], T)} />
+    {furos.map(h => <path class="cut" d={circ(a => [h.x + h.r * Math.cos(a), h.y + h.r * Math.sin(a), T])} />)}
+    {topo.map(y => <path class="cut" d={circ(a => [L, y + 4 * Math.cos(a), T / 2 + 4 * Math.sin(a)])} />)}
+    <polyline class="edge" points={poly([[0, P, 0], [0, P, T], [0, 0, T], [L, 0, T], [L, 0, 0], [L, P, 0], [0, P, 0]])} />
+    <polyline class="edge" points={poly([[0, P, T], [L, P, T], [L, 0, T], [L, P, T], [L, P, 0]])} />
+    <path class="tp" d={caminho([[-8, -8], [L + 8, -8], [L + 8, P + 8], [-8, P + 8]], T)} />
+  </svg>
+  <div class="m3d-hud" aria-hidden="true">
+    <p class="m3d-st"><span class="m3d-dot"></span><span class="m3d-st-txt">01 · Desenho 3D</span></p>
+    <p class="m3d-xyz">X <b>0000.0</b> Y <b>0000.0</b> Z <b>000.0</b></p>
+    <ol class="m3d-ops">
+      {fases.map((o, i) => <li><span>{String(i + 1).padStart(2, "0")}</span>{o}</li>)}
+    </ol>
+    <ol class="m3d-files"></ol>
+    <p class="m3d-tag">SOLIDLYNX · PEÇA 001 · {L}×{P}×{T}</p>
+  </div>
+</div>
+<noscript><style>.m3d .drawing { visibility: visible; }</style></noscript>
+
+<style>
+  .m3d { position: relative; aspect-ratio: 3 / 2; background: var(--bg-2); }
+  /* o desenho fica escondido: só aparece se não houver 3D */
+  .m3d .drawing { visibility: hidden; }
+  .m3d.sem-3d .drawing { visibility: visible; }
+  .m3d :global(.m3d-canvas) { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .6s ease; }
+  .m3d.on :global(.m3d-canvas) { opacity: 1; }
+  .m3d-hud { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .6s ease .15s;
+    font-family: var(--mono); font-size: clamp(.58rem, 1.05vw, .72rem); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .m3d.on .m3d-hud { opacity: 1; }
+  .m3d-hud > * { position: absolute; margin: 0; }
+  /* esbatimento por trás do texto do painel, para se ler sempre sobre a cena */
+  .m3d-hud::before, .m3d-hud::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; }
+  .m3d-hud::before { top: 0; height: 22%; background: linear-gradient(rgba(27,28,31,.92), rgba(27,28,31,0)); }
+  .m3d-hud::after { bottom: 0; height: 34%; background: linear-gradient(rgba(27,28,31,0), rgba(27,28,31,.9)); }
+  .m3d-st { top: 4.5%; left: 3.5%; display: flex; align-items: center; gap: 10px; color: var(--text); }
+  .m3d-dot { width: 7px; height: 7px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .m3d-xyz { top: 4.5%; right: 3.5%; font-variant-numeric: tabular-nums; }
+  .m3d-xyz b { font-weight: 500; color: var(--text); }
+  .m3d-ops { bottom: 4.5%; left: 3.5%; display: grid; gap: 5px; list-style: none; padding: 0; }
+  .m3d-ops li { display: flex; align-items: center; gap: 8px; transition: color .3s; }
+  .m3d-ops li::before { content: ""; width: 7px; height: 7px; border: 1px solid currentColor; transition: background .3s, border-color .3s; }
+  .m3d-ops li span { opacity: .6; }
+  .m3d-ops li.on { color: var(--text); }
+  .m3d-ops li.on::before { background: var(--accent); border-color: var(--accent); }
+  .m3d-ops li.feito::before { background: currentColor; }
+  .m3d-tag { bottom: 4.5%; right: 3.5%; }
+  /* ficheiros de programa gerados (um por peça) */
+  .m3d-files { top: 13%; right: 3.5%; display: grid; gap: 4px; list-style: none; padding: 0; }
+  .m3d-files :global(li) {
+    display: flex; align-items: center; gap: 8px; min-width: 13.5em;
+    padding: 4px 10px 4px 8px; border: 1px solid var(--line); border-left: 2px solid var(--accent);
+    background: rgba(21,22,24,.88); color: var(--text); opacity: 0; transform: translateX(14px);
+    transition: opacity .35s ease, transform .35s ease;
+  }
+  .m3d-files :global(li.on) { opacity: 1; transform: none; }
+  .m3d-files :global(li i) { flex: none; width: 10px; height: 13px; border: 1px solid var(--accent); clip-path: polygon(0 0, 65% 0, 100% 30%, 100% 100%, 0 100%); }
+  .m3d-files :global(li b) { font-weight: 500; color: var(--accent); }
+  .m3d-files :global(li span) { color: var(--muted); }
+  /* ecrãs estreitos: só o estado da operação, para nada se sobrepor */
+  @media (max-width: 600px) {
+    .m3d-ops, .m3d-xyz, .m3d-tag, .m3d-files { display: none; }
+    .m3d-hud::after { display: none; }
+    .m3d-st { right: 3.5%; align-items: flex-start; line-height: 1.5; }
+    .m3d-dot { flex: none; margin-top: .45em; }
+  }
+  @media (prefers-reduced-motion: no-preference) { .m3d-dot { animation: m3d-blink 1s steps(2, jump-none) infinite; } }
+  @keyframes m3d-blink { 50% { opacity: .2; } }
+
+  /* desenho estático (alternativa sem WebGL) */
+  .iso .f-top { fill: #26272b; }
+  .iso .f-front { fill: #1d1e21; }
+  .iso .f-side { fill: #19191c; }
+  .iso .edge { fill: none; stroke: rgba(236,235,231,.8); stroke-width: 1.25; stroke-linejoin: round; }
+  .iso .cut { fill: #111214; stroke: rgba(236,235,231,.6); stroke-width: .9; stroke-linejoin: round; }
+  .iso .tp { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
+</style>
+
+<script>
+  const wrap = document.querySelector<HTMLElement>(".m3d");
+  const reduzir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const temWebGL = (() => { try { return !!document.createElement("canvas").getContext("webgl2"); } catch { return false; } })();
+
+  if (wrap && temWebGL) {
+    const st = wrap.querySelector(".m3d-st-txt")!;
+    const xyz = [...wrap.querySelectorAll(".m3d-xyz b")];
+    const itens = [...wrap.querySelectorAll(".m3d-ops li")];
+    const lista = wrap.querySelector<HTMLOListElement>(".m3d-files")!;
+    const fmt = (n: number, w: number) => (n < -0.0005 ? "-" : "") + Math.abs(n * 100).toFixed(1).padStart(w, "0");
+    const ui = {
+      estado: (n: number, nome: string) => {
+        st.textContent = `${String(n).padStart(2, "0")} · ${nome}`;
+        itens.forEach((el, i) => { el.classList.toggle("on", i === n - 1); el.classList.toggle("feito", i < n - 1); });
+      },
+      concluido: () => {
+        st.textContent = "Peça concluída";
+        itens.forEach(el => { el.classList.remove("on"); el.classList.add("feito"); });
+      },
+      // coordenadas em mm a partir do canto da peça
+      coords: (v: { x: number; y: number; z: number }) => {
+        xyz[0].textContent = fmt(v.x + 3.5, 6); xyz[1].textContent = fmt(v.z + 2, 6); xyz[2].textContent = fmt(v.y, 5);
+      },
+      // ficheiro do programa da peça
+      ficheiro: (nome: string) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<i></i><b>01</b><span></span>`;
+        li.querySelector("span")!.textContent = nome;
+        lista.replaceChildren(li);
+        requestAnimationFrame(() => li.classList.add("on"));
+      },
+      // o ficheiro voa para a cabeça da máquina; devolve a duração do voo (s)
+      enviarFicheiro: (alvo: { x: number; y: number }) => {
+        const li = lista.firstElementChild as HTMLElement | null;
+        if (!li) return 0.8;
+        const caixa = wrap.getBoundingClientRect(), r = li.getBoundingClientRect();
+        const tx = caixa.left + alvo.x * caixa.width, ty = caixa.top + alvo.y * caixa.height;
+        li.style.transition = "transform .8s cubic-bezier(.55,0,.25,1), opacity .3s ease .5s";
+        li.style.transform = `translate(${tx - (r.left + r.width / 2)}px, ${ty - (r.top + r.height / 2)}px) scale(.12)`;
+        li.style.opacity = "0";
+        return 0.8;
+      },
+      limparFicheiro: () => lista.replaceChildren(),
+    };
+    import("../scripts/maquina3d")
+      .then(({ iniciar }) => {
+        iniciar(wrap, ui, { animar: !reduzir });
+        requestAnimationFrame(() => wrap.classList.add("on"));
+      })
+      .catch(e => { console.error(e); wrap.classList.add("sem-3d"); });
+  } else {
+    wrap?.classList.add("sem-3d");
+  }
+</script>

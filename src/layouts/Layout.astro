@@ -1,0 +1,117 @@
+---
+// Tipos de letra servidos pelo próprio site (sem ligações a serviços externos).
+import "@fontsource-variable/archivo/wdth.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "../styles/global.css";
+import archivoLatin from "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url";
+import { empresa } from "../data/empresa";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Imagem de partilha (relativa à raiz do site). */
+  image?: string;
+  /** Páginas que não devem aparecer nos motores de busca (ex.: 404). */
+  noindex?: boolean;
+  /** Dados estruturados (schema.org) específicos da página. */
+  schema?: Record<string, unknown>[];
+}
+const { title, description, image = "/og.png", noindex = false, schema = [] } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const site = Astro.site ?? new URL(`https://${empresa.site}`);
+const canonical = new URL(Astro.url.pathname, site).href;
+const imageUrl = new URL(image, site).href;
+
+// Identidade da empresa, comum a todas as páginas.
+const orgId = `${site.origin}/#organizacao`;
+const siteId = `${site.origin}/#site`;
+const grafo = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": orgId,
+      name: empresa.nome,
+      ...(empresa.denominacao && { legalName: empresa.denominacao }),
+      ...(empresa.nif && { vatID: `PT${empresa.nif}` }),
+      url: `${site.origin}/`,
+      logo: { "@type": "ImageObject", url: `${site.origin}/favicon-512.png`, width: 512, height: 512 },
+      image: `${site.origin}/og.png`,
+      email: empresa.emailGeral,
+      slogan: "Foca-te no que interessa",
+      description: "Automação de processos de ponta a ponta, inteligência artificial e agentes, e consultoria em sistemas e métodos de trabalho para empresas de mobiliário.",
+      areaServed: { "@type": "Country", name: "Portugal" },
+      knowsLanguage: "pt-PT",
+      contactPoint: { "@type": "ContactPoint", contactType: "customer service", email: empresa.emailGeral, availableLanguage: "Portuguese", areaServed: "PT" },
+    },
+    { "@type": "WebSite", "@id": siteId, url: `${site.origin}/`, name: empresa.nome, inLanguage: "pt-PT", publisher: { "@id": orgId } },
+    ...schema,
+  ],
+};
+---
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {!noindex && <link rel="canonical" href={canonical} />}
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"} />
+    <meta name="theme-color" content="#151618" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="author" content={empresa.nome} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={empresa.nome} />
+    <meta property="og:locale" content="pt_PT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SolidLynx · Foca-te no que interessa" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/png" sizes="512x512" href={`${base}/favicon-512.png`} />
+    <link rel="icon" href={`${base}/favicon.ico`} sizes="48x48 32x32 16x16" />
+    <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
+    <link rel="manifest" href={`${base}/site.webmanifest`} />
+    <link rel="sitemap" type="application/xml" href={`${base}/sitemap.xml`} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(grafo)} />
+  </head>
+  <body>
+    <slot />
+    <script>
+      // ---------- menu (telemóvel) ----------
+      const top = document.querySelector<HTMLElement>(".top");
+      const toggle = top?.querySelector<HTMLButtonElement>(".nav-toggle");
+      const setOpen = (open: boolean) => {
+        top?.classList.toggle("open", open);
+        toggle?.setAttribute("aria-expanded", String(open));
+        toggle?.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+      };
+      toggle?.addEventListener("click", () => setOpen(!top?.classList.contains("open")));
+      top?.querySelectorAll(".menu a").forEach(a => a.addEventListener("click", () => setOpen(false)));
+      addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
+      addEventListener("pointerdown", e => { if (top && !top.contains(e.target as Node)) setOpen(false); });
+
+      // ---------- link da secção visível ----------
+      const links = [...document.querySelectorAll<HTMLAnchorElement>(".menu a")];
+      const alvos = links
+        .map(a => ({ a, s: a.pathname === location.pathname && a.hash ? document.querySelector(a.hash) : null }))
+        .filter((x): x is { a: HTMLAnchorElement; s: Element } => !!x.s);
+      const io = new IntersectionObserver(es => {
+        for (const e of es) if (e.isIntersecting) links.forEach(l => l.classList.toggle("on", l === alvos.find(x => x.s === e.target)?.a));
+      }, { rootMargin: "-45% 0px -50% 0px" });
+      alvos.forEach(x => io.observe(x.s));
+    </script>
+  </body>
+</html>

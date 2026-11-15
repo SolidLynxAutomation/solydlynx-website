@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<Layout title="Página não encontrada · SolidLynx" description="A página que procura não existe ou mudou de endereço." noindex>
+  <Header />
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="hero-meta label"><span>Erro 404</span></p>
+        <h1>Página não<br />encontrada<span class="dot">.</span></h1>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="lead">A página que procura não existe ou mudou de endereço.</p>
+            <div class="cta">
+              <a class="btn" href={`${base}/`}>Voltar ao início <span class="arr" aria-hidden="true">→</span></a>
+              <a class="link" href={`${base}/#contacto`}>Contacto</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
